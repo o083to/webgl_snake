@@ -1,8 +1,9 @@
-/* global Detector, THREE, MAX_LIGHTS, GAME_CONTAINER, AMBIENT_COLOR, GROUND_COLOR, SPECULAR_COLOR, GROUND_SHININESS, FIELD_ADDITIONAL_MARGIN, FIELD_HEIGHT, FIELD_WIDTH, AMBIENT_LIGHT_COLOR */
+/* global Detector, THREE, MAX_LIGHTS, GAME_CONTAINER, AMBIENT_COLOR, GROUND_COLOR, SPECULAR_COLOR, GROUND_SHININESS, FIELD_ADDITIONAL_MARGIN, FIELD_HEIGHT, FIELD_WIDTH, AMBIENT_LIGHT_COLOR, MAIN_SPOTLIGHT_COLOR, BORDER_SIZE, RENDERER_RATIO */
 
 var scene;
 var camera;
 var renderer;
+var gameContainer;
 
 function snakeGame() {
     if (!Detector.webgl) {
@@ -13,13 +14,20 @@ function snakeGame() {
 }
 
 function init() {
+    addEvents();
     scene = new THREE.Scene();    
     camera = createCamera();
     renderer = createRenderer();
     
-    scene.add(createGround());
-    scene.add(new THREE.AmbientLight(AMBIENT_LIGHT_COLOR));
+    gameContainer = getGameContainer();
+    gameContainer.appendChild(renderer.domElement);
     
+    scene.add(createGround());
+    scene.add(createMainSpotLight());
+    
+    scene.add(createTestObject());
+    
+    updateRendererSize();
     draw();
 }
 
@@ -29,7 +37,7 @@ function draw() {
 }
 
 function createCamera() {
-    var camera = new THREE.PerspectiveCamera( 30, 16/9, 0.1, 50 );
+    var camera = new THREE.PerspectiveCamera( 30, RENDERER_RATIO, 0.1, 50 );
     camera.position.z = 30;
     camera.position.x = 0;
     camera.position.y = 0;
@@ -37,12 +45,10 @@ function createCamera() {
 }
 
 function createRenderer() {
-    var renderer = new THREE.WebGLRenderer();
+    var renderer = new THREE.WebGLRenderer();    
     renderer.maxLights = MAX_LIGHTS;
     renderer.shadowMapEnabled = true;
     renderer.shadowMapType = THREE.BasicShadowMap;
-    var gameContainer = document.getElementById(GAME_CONTAINER);
-    gameContainer.appendChild(renderer.domElement);
     return renderer;
 }
 
@@ -69,4 +75,43 @@ function createGround() {
     ground.castShadow = true;	
     
     return ground;
+}
+
+function createMainSpotLight() {
+    var spotLight = new THREE.SpotLight(MAIN_SPOTLIGHT_COLOR);
+    spotLight.position.set(0, 0, 90);
+    return spotLight;
+}
+
+function createTestObject() {
+    var sphereGeometry = new THREE.SphereGeometry(0.5,20,20);
+    var sphereMaterial = new THREE.MeshLambertMaterial({color: 0xB0C4DE});
+    var sphere = new THREE.Mesh(sphereGeometry,sphereMaterial);
+    sphere.position.x = 0;
+    sphere.position.y = 0;
+    sphere.position.z = 4;
+    return sphere;
+}
+
+function getGameContainer() {
+    var gameContainer = document.getElementById(GAME_CONTAINER);
+    return gameContainer;
+}
+
+function updateRendererSize() {
+    var availableWidth = gameContainer.offsetWidth;
+    var availableHeight = gameContainer.offsetHeight;
+    var height = availableHeight;
+    var width = Math.round(height * RENDERER_RATIO);
+    if (width > availableWidth) {
+        width = availableWidth;
+        height = Math.round(width * (1 / RENDERER_RATIO));
+    }
+    renderer.setSize(width, height);
+}
+
+function addEvents() {
+    window.addEventListener("load", function(event) {
+	window.onresize = updateRendererSize;
+    });
 }

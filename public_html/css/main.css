@@ -1,0 +1,35 @@
+html, body {
+	margin:0;
+	padding:0;
+	width:100%;
+	height:100%;
+	background-color:black;
+	overflow: hidden;
+}
+
+canvas {
+	image-rendering:optimizeSpeed;             /* Legal fallback */
+	image-rendering:-moz-crisp-edges;          /* Firefox        */
+	image-rendering:-o-crisp-edges;            /* Opera          */
+	image-rendering:pixelated; /* Safari         */
+	image-rendering:optimize-contrast;         /* CSS3 Proposed  */
+	image-rendering:crisp-edges;               /* CSS4 Proposed  */
+	image-rendering:pixelated;                 /* CSS4 Proposed  */
+	-ms-interpolation-mode:nearest-neighbor;   /* IE8+           */
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	/* bring your own prefixes */
+	transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	-webikit-transform: translate(-50%, -50%);
+	max-width:100%;
+}
+
+#main{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+}
