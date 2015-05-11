@@ -1,17 +1,13 @@
-var MAX_LIGHTS = 20;
-var GAME_CONTAINER = "main";
-
-var AMBIENT_COLOR = 0x555555;
-var GROUND_COLOR = 0x555555;
-var SPECULAR_COLOR = 0xFFFFFF;
-var MAIN_SPOTLIGHT_COLOR = 0x151B15;
-
-var GROUND_SHININESS = 25;
-
-var FIELD_WIDTH = 32;
-var FIELD_HEIGHT = 18;
-var FIELD_ADDITIONAL_MARGIN = 5;
-
-var BORDER_SIZE = 20;
-
-var RENDERER_RATIO = 16/9;
+var CONFIG = {
+    boardWidth : 32,
+    boardHeight : 18,
+    boardAdditionalMargin : 5,
+    rendererRatio : 16/9,
+    maxLights : 20,
+    groundShinies : 25,
+    containerName : "main",
+    ambientColor : 0x555555,
+    groungColor : 0x555555,
+    specularColor : 0xFFFFFF,
+    mainLightColor : 0x151B15
+};
