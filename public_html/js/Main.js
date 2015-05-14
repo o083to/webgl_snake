@@ -25,8 +25,8 @@ function init () {
     scene.add(createGround());
     scene.add(createMainLight());   
     
-    // test
-    scene.add(createTestObject());
+    var game = new Game();
+    var snakeImage = new SnakeImage(game.snake, scene);
 
     updateRendererSize();
     draw();
@@ -55,14 +55,14 @@ function updateRendererSize () {
     }
     renderer.setSize(width, height);
 }
-    
+
 function createScene () {
     return new THREE.Scene();
 }    
 
 function createCamera () {
     var camera = new THREE.PerspectiveCamera( 30, CONFIG.rendererRatio, 0.1, 50 );
-    camera.position.z = 30;
+    camera.position.z = 34;
     camera.position.x = 0;
     camera.position.y = 0;
     return camera;
@@ -110,14 +110,4 @@ function createMainLight () {
 function getGameContainer () {
     var gameContainer = document.getElementById(CONFIG.containerName);
     return gameContainer;
-}
-
-function createTestObject () {
-    var sphereGeometry = new THREE.SphereGeometry(0.5,20,20);
-    var sphereMaterial = new THREE.MeshLambertMaterial({color: 0xB0C4DE});
-    var sphere = new THREE.Mesh(sphereGeometry,sphereMaterial);
-    sphere.position.x = 0;
-    sphere.position.y = 0;
-    sphere.position.z = 4;
-    return sphere;
 }
