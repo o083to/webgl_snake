@@ -1,6 +1,8 @@
 var CONFIG = {
     boardWidth : 32,
     boardHeight : 18,
+    maxX : 31,
+    maxY : 17,
     boardAdditionalMargin : 5,
     rendererRatio : 16/9,
     maxLights : 20,

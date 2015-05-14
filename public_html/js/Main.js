@@ -2,7 +2,8 @@
 
 var scene;    
 var camera;  
-var renderer;   
+var renderer; 
+var game;
 
 function snakeGame () {
     if (!Detector.webgl) {
@@ -25,7 +26,7 @@ function init () {
     scene.add(createGround());
     scene.add(createMainLight());   
     
-    var game = new Game();
+    game = new Game();
     var snakeImage = new SnakeImage(game.snake, scene);
 
     updateRendererSize();
@@ -33,6 +34,7 @@ function init () {
 }
 
 function draw () {
+    game.nextStep();
     requestAnimationFrame(draw);
     renderer.render(scene, camera);
 }

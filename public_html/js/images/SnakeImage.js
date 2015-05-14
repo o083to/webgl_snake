@@ -4,20 +4,35 @@ SnakeImage = function (snake, scene) {
     this.snake = snake;
     this.scene = scene;
     
-    var body = new Array(length);
+    this.bodyImage = new Array(length);
     for (i = 0; i < snake.body.length; i++) {        
-        body[i] = createSnakeSegment(toSceneX(snake.body[i].x), toSceneY(snake.body[i].y));
-        scene.add(body[i]);
+        this.bodyImage[i] = createSnakeSegment(snake.body[i].x, snake.body[i].y);
+        scene.add(this.bodyImage[i]);
     }
+    
+    this.snake.addMovingHandler(this.movingHandler.bind(this));
 };
 
 SnakeImage.prototype = {
-    constructor : SnakeImage
+    constructor : SnakeImage,
+    
+    movingHandler : function () {
+        var tail = this.bodyImage.pop();
+        var headX = this.snake.body[0].x;
+        var headY = this.snake.body[0].y;
+        replaceSegment(tail, headX, headY);
+        this.bodyImage.unshift(tail);
+    }
 };
 
 function createSnakeSegment(x, y) {
     var material = new THREE.MeshLambertMaterial({color: 0xB0C4DE});
-    return createSphere(CONFIG.snakeSegmentRadius, x, y, material);
+    return createSphere(CONFIG.snakeSegmentRadius, toSceneX(x), toSceneY(y), material);
+}
+
+function replaceSegment(segment, x, y) {
+    segment.position.x = toSceneX(x);
+    segment.position.y = toSceneY(y);
 }
 
 function toSceneX(x) {

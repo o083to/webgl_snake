@@ -5,5 +5,9 @@ function Game () {
 }
 
 Game.prototype = {
-    constructor : Game
+    constructor : Game,
+    
+    nextStep : function () {
+        this.snake.move();
+    }
 };
