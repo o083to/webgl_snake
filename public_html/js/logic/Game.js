@@ -1,15 +1,42 @@
 /* global CONFIG, UTILS */
 
+var ATTEMPTS_TO_MOVE = 8;
+
 function Game () {
     this.snake = new Snake(CONFIG.initialSnakeLength);
     this.fireflies = createFireflies();
+    this.initFrames = createFirstMovementFrames();
 }
 
 Game.prototype = {
     constructor : Game,
     
-    nextStep : function () {
-        this.snake.move();
+    nextStep : function (frame) {
+        if (frame % CONFIG.snakeDelay === 0) {
+            this.snake.move();
+        }
+        // столкновение
+        this.moveFireFlies(frame);
+    },
+    
+    moveFireFlies : function (frame) {
+        for (var i = 0; i < this.fireflies.length; i++) {
+            if ((this.initFrames[i] + frame) % CONFIG.fireflyDelay === 0) {
+                for (var j = 0; j < ATTEMPTS_TO_MOVE; j++) {
+                    var dx, dy;
+                    do {
+                        dx = UTILS.getRandomInt(-1, 1);
+                        dy = UTILS.getRandomInt(-1, 1);
+                    } while (dx === 0 && dy === 0)
+                    var newX = correctX(this.fireflies[i].x + dx);
+                    var newY = correctY(this.fireflies[i].y + dy);
+                    if (this.isFreePosition(newX, newY)) {
+                        this.fireflies[i].move(newX, newY);
+                        break;
+                    }
+                }
+            }
+        }
     },
     
     turnSnake : function (newDirection) {
@@ -45,4 +72,30 @@ function createFireflies() {
         fireflies[i] = new Firefly(x, y);
     }
     return fireflies;
+}
+
+function createFirstMovementFrames() {
+    var firstMovementFrames = new Array(CONFIG.countOfFireflies);
+    for (var i = 0; i < firstMovementFrames.length; i++) {
+        firstMovementFrames[i] = UTILS.getRandomInt(0, CONFIG.fireflyDelay);
+    }
+    return firstMovementFrames;
+}
+
+function correctX(x) {
+    return correct(x, CONFIG.maxX);
+}
+
+function correctY(y) {
+    return correct(y, CONFIG.maxY);
+}
+
+function correct(c, max) {
+    if (c > max) {
+        return 0;
+    } else if (c < 0) {
+        return max;
+    } else {
+        return c;
+    }    
 }

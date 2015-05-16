@@ -1,4 +1,4 @@
-/* global UTILS */
+/* global UTILS, CONFIG */
 
 function Firefly (x, y) {
     this.x = x;

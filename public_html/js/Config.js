@@ -20,8 +20,9 @@ var CONFIG = {
     y0 : -8.5,
     initHeadX : 16,
     initHeadY : 8,
-    delay : 10,
-    countOfFireflies : 6
+    snakeDelay : 8,
+    fireflyDelay : 24,
+    countOfFireflies : 4
 };
 
 var DIRECTION = {

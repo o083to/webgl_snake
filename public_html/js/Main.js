@@ -39,11 +39,10 @@ function init () {
 }
 
 function draw () {
-    frameCounter++;
-    if (frameCounter === CONFIG.delay) {
-        game.nextStep();
+    if (frameCounter === (CONFIG.snakeDelay * 1000000)) {
         frameCounter = 0;
     }
+    game.nextStep(frameCounter++);
     requestAnimationFrame(draw);
     renderer.render(scene, camera);
 }
