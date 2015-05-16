@@ -11,6 +11,7 @@ SnakeImage = function (snake, scene) {
     }
     
     this.snake.addMovingHandler(this.movingHandler.bind(this));
+    this.snake.addGrowthHandler(this.growthHandler.bind(this));
 };
 
 SnakeImage.prototype = {
@@ -22,6 +23,13 @@ SnakeImage.prototype = {
         var headY = this.snake.body[0].y;
         replaceSegment(tail, headX, headY);
         this.bodyImage.unshift(tail);
+    },
+    
+    growthHandler : function () {
+        var tail = this.snake.body[this.snake.body.length - 1];
+        var tailImage = createSnakeSegment(tail.x, tail.y);
+        this.bodyImage.push(tailImage);
+        this.scene.add(tailImage);
     }
 };
 

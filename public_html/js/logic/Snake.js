@@ -14,6 +14,9 @@ Snake = function (length) {
 Snake.prototype = {
     constructor : Snake,
     
+    oldTailX : 0,    
+    oldTailY : 0,
+    
     move : function () {
         var headX = this.body[0].x;
         var headY = this.body[0].y;        
@@ -31,6 +34,8 @@ Snake.prototype = {
                 headX = headX === CONFIG.maxX ? 0 : headX + 1;
         }
         var tail = this.body.pop();
+        this.oldTailX = tail.x;
+        this.oldTailY = tail.y;
         tail.x = headX;
         tail.y = headY;
         this.body.unshift(tail);
@@ -45,5 +50,14 @@ Snake.prototype = {
         if ((this.direction % 2) !== (newDirection % 2)) {
             this.direction = newDirection;
         }
+    },
+    
+    grow : function () {
+        this.body.push({x : this.oldTailX, y : this.oldTailY});
+        this.growthHandler();
+    },
+    
+    addGrowthHandler : function (handler) {
+        this.growthHandler = handler;
     }
 };

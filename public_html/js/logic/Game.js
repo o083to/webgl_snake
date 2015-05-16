@@ -15,8 +15,21 @@ Game.prototype = {
         if (frame % CONFIG.snakeDelay === 0) {
             this.snake.move();
         }
-        // столкновение
+        this.checkForCollision();
         this.moveFireFlies(frame);
+    },
+    
+    checkForCollision : function () {
+        var headX = this.snake.body[0].x;
+        var headY = this.snake.body[0].y;
+        for (var i = 0; i < this.fireflies.length; i++) {
+            if (headX === this.fireflies[i].x && headY === this.fireflies[i].y) {
+                var position = this.getFreePosition();
+                this.fireflies[i].move(position.x, position.y);
+                this.snake.grow();
+                break;
+            }
+        }
     },
     
     moveFireFlies : function (frame) {
@@ -27,7 +40,7 @@ Game.prototype = {
                     do {
                         dx = UTILS.getRandomInt(-1, 1);
                         dy = UTILS.getRandomInt(-1, 1);
-                    } while (dx === 0 && dy === 0)
+                    } while (dx === 0 && dy === 0);
                     var newX = correctX(this.fireflies[i].x + dx);
                     var newY = correctY(this.fireflies[i].y + dy);
                     if (this.isFreePosition(newX, newY)) {
@@ -45,6 +58,16 @@ Game.prototype = {
     
     isFreePosition : function (x, y) {
         return (!arrayIncludesXY(this.snake.body, x, y) && !arrayIncludesXY(this.fireflies, x, y));
+    },
+    
+    getFreePosition : function () {
+        var x, y;
+        do {
+            x = UTILS.getRandomInt(0, CONFIG.maxX);
+            y = UTILS.getRandomInt(0, CONFIG.maxY);            
+        } 
+        while (this.isFreePosition(x, y));
+        return { x : x, y : y};            
     }
 };
 
