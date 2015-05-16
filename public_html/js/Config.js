@@ -18,7 +18,8 @@ var CONFIG = {
     x0 : -15.5,
     y0 : -8.5,
     initHeadX : 16,
-    initHeadY : 8
+    initHeadY : 8,
+    delay : 10
 };
 
 var DIRECTION = {

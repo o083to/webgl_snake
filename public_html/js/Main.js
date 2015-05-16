@@ -4,6 +4,7 @@ var scene;
 var camera;  
 var renderer; 
 var game;
+var frameCounter = 0;
 
 function snakeGame () {
     if (!Detector.webgl) {
@@ -34,7 +35,11 @@ function init () {
 }
 
 function draw () {
-    game.nextStep();
+    frameCounter++;
+    if (frameCounter === CONFIG.delay) {
+        game.nextStep();
+        frameCounter = 0;
+    }
     requestAnimationFrame(draw);
     renderer.render(scene, camera);
 }
