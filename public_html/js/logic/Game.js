@@ -9,5 +9,9 @@ Game.prototype = {
     
     nextStep : function () {
         this.snake.move();
+    },
+    
+    turnSnake : function (newDirection) {
+        this.snake.turn(newDirection);
     }
 };

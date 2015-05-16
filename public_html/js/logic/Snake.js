@@ -39,5 +39,11 @@ Snake.prototype = {
     
     addMovingHandler : function (handler) {
         this.movingHandler = handler;
+    },
+    
+    turn : function (newDirection) {
+        if ((this.direction % 2) !== (newDirection % 2)) {
+            this.direction = newDirection;
+        }
     }
 };

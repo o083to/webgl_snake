@@ -42,6 +42,7 @@ function draw () {
 function addEvents () {
     window.addEventListener("load", function(event) {
         window.onresize = updateRendererSize;
+        document.addEventListener('keydown', new KeyDownHandler(game));
     });
 }
 
