@@ -15,11 +15,13 @@ var CONFIG = {
     initialSnakeLength : 5,
     playersZ : 0,
     snakeSegmentRadius : 0.5,
+    fireflyRadius : 0.5,
     x0 : -15.5,
     y0 : -8.5,
     initHeadX : 16,
     initHeadY : 8,
-    delay : 10
+    delay : 10,
+    countOfFireflies : 6
 };
 
 var DIRECTION = {

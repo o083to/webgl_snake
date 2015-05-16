@@ -29,6 +29,10 @@ function init () {
     
     game = new Game();
     var snakeImage = new SnakeImage(game.snake, scene);
+    var fireflyImages = new Array(CONFIG.countOfFireflies);
+    for (var i = 0; i < fireflyImages.length; i++) {
+        fireflyImages[i] = new FireflyImage(game.fireflies[i], scene);
+    }
 
     updateRendererSize();
     draw();
