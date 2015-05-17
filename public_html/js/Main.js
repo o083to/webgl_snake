@@ -51,6 +51,7 @@ function addEvents () {
     window.addEventListener("load", function(event) {
         window.onresize = updateRendererSize;
         document.addEventListener('keydown', new KeyDownHandler(game));
+        renderer.domElement.addEventListener('touchstart', new TouchStartHandler(game));
     });
 }
 
