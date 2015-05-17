@@ -11,11 +11,16 @@ function Game () {
 Game.prototype = {
     constructor : Game,
     
+    isGameOver : false,
+    
     nextStep : function (frame) {
-        if (frame % CONFIG.snakeDelay === 0) {
-            this.snake.move();
-        }
-        this.checkForCollision();
+        if (!this.isGameOver && frame % CONFIG.snakeDelay === 0) {
+            if (this.snake.move()) {
+                this.checkForCollision();
+            } else {
+                this.isGameOver = true;
+            }
+        }        
         this.moveFireFlies(frame);
     },
     
@@ -57,7 +62,8 @@ Game.prototype = {
     },
     
     isFreePosition : function (x, y) {
-        return (!arrayIncludesXY(this.snake.body, x, y) && !arrayIncludesXY(this.fireflies, x, y));
+        return (!UTILS.arrayIncludesXY(this.snake.body, x, y) 
+                && !UTILS.arrayIncludesXY(this.fireflies, x, y));
     },
     
     getFreePosition : function () {
@@ -70,15 +76,6 @@ Game.prototype = {
         return { x : x, y : y};            
     }
 };
-
-function arrayIncludesXY(array, x, y) {
-    for (var i = 0; i < array.length; i++) {
-        if (array[i].x === x && array[i].y === y) {
-            return true;
-        }
-    }
-    return false;
-}
 
 function createFireflies() {
     var fireflies = new Array(CONFIG.countOfFireflies);

@@ -20,6 +20,15 @@ var UTILS = {
         sphere.position.y = y;
         sphere.position.z = CONFIG.playersZ;
         return sphere;
+    },
+    
+    arrayIncludesXY : function (array, x, y) {
+        for (var i = 0; i < array.length; i++) {
+            if (array[i].x === x && array[i].y === y) {
+                return true;
+            }
+        }
+        return false;
     }
 };
 

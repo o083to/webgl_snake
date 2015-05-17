@@ -1,4 +1,4 @@
-/* global DIRECTION, CONFIG */
+/* global DIRECTION, CONFIG, UTILS */
 
 Snake = function (length) {
     this.direction = DIRECTION.RIGHT;
@@ -36,10 +36,15 @@ Snake.prototype = {
         var tail = this.body.pop();
         this.oldTailX = tail.x;
         this.oldTailY = tail.y;
-        tail.x = headX;
-        tail.y = headY;
-        this.body.unshift(tail);
-        this.movingHandler();
+        if (UTILS.arrayIncludesXY(this.body, headX, headY)) {
+            return false;
+        } else {
+            tail.x = headX;
+            tail.y = headY;
+            this.body.unshift(tail);
+            this.movingHandler();
+            return true;
+        }
     },
     
     addMovingHandler : function (handler) {
