@@ -13,10 +13,28 @@ Game.prototype = {
     
     isGameOver : false,
     
+    isPaused : false,
+    
     score : 0,
     
+    suspend : function () {
+        if (!this.isGameOver) {
+            this.isPaused = true;
+        }
+    },
+    
+    resume : function () {
+        if (!this.isGameOver) {
+            this.isPaused = false;
+        }
+    },
+    
+    stop : function () {
+        this.isGameOver = true;
+    },
+    
     nextStep : function (frame) {
-        if (!this.isGameOver && frame % CONFIG.snakeDelay === 0) {
+        if (!this.isPaused && !this.isGameOver && frame % CONFIG.snakeDelay === 0) {
             if (this.snake.move()) {
                 this.checkForCollision();
             } else {

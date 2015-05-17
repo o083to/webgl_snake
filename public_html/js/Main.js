@@ -53,6 +53,12 @@ function addEvents () {
         window.onresize = updateRendererSize;
         document.addEventListener('keydown', new KeyDownHandler(game));
         renderer.domElement.addEventListener('touchstart', new TouchStartHandler(game));
+        var playButtonHandler = new PlayButtonHandler(game);
+        document.getElementById(CONFIG.playButtonName).onclick = playButtonHandler.handleEvent.bind(playButtonHandler);
+        var pauseButtonHandler = new SuspendButtonHandler(game);
+        document.getElementById(CONFIG.pauseButtonName).onclick = pauseButtonHandler.handleEvent.bind(pauseButtonHandler);
+        var stopButtonHandler = new StopButtonHandler(game);
+        document.getElementById(CONFIG.stopButtonName).onclick = stopButtonHandler.handleEvent.bind(stopButtonHandler);
     });
 }
 
