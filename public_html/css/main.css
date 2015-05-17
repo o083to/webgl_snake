@@ -22,7 +22,7 @@ html, body {
 
 body {
 	font-family: 'wendyregular';
-	color: white;
+	color: black;
 	font-size: 32pt;
 }
 
@@ -94,4 +94,34 @@ canvas {
 
 .button:hover{
 	opacity: 1;
+}
+
+#play_button{
+	background: url('../icons/play.png');
+	background-size: 100%;
+}
+
+#pause_button{
+	background: url('../icons/pause.png');
+	background-size: 100%;
+}
+
+#stop_button{
+	background: url('../icons/stop.png');
+	background-size: 100%;
+}
+
+#inc_speed_button{
+	background: url('../icons/high.png');
+	background-size: 100%;
+}
+
+#dec_speed_button{
+	background: url('../icons/low.png');
+	background-size: 100%;
+}
+
+#replay_button{
+	background: url('../icons/replay.png');
+	background-size: 100%;
 }
