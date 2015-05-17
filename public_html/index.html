@@ -14,12 +14,18 @@
         <script type="text/javascript" src="js/images/SnakeImage.js"></script>
         <script type="text/javascript" src="js/images/FireflyImage.js"></script>
         <script type="text/javascript" src="js/handlers/KeyDownHandler.js"></script>
-        <script type="text/javascript" src="js/handlers/TouchStartHandler.js"></script>
+        <script type="text/javascript" src="js/handlers/TouchStartHandler.js"></script>        
+        <script type="text/javascript" src="js/handlers/UpdateScoreHandler.js"></script>
         <script type="text/javascript" src="js/Main.js"></script>
         <link rel="stylesheet" type="text/css" href="css/main.css">
     </head>
     <body>
-        <div id="main"></div>
+        <div id="main">
+            <div id="button_container">
+		<br />
+		<span id="score">0</span>
+            </div>
+        </div>
         <script type="text/javascript">
     		snakeGame();
     	</script>

@@ -33,6 +33,7 @@ function init () {
     for (var i = 0; i < fireflyImages.length; i++) {
         fireflyImages[i] = new FireflyImage(game.fireflies[i], scene);
     }
+    var scoreHandler = new UpdateScoreHandler(game, document.getElementById(CONFIG.scoreLabelName));
 
     updateRendererSize();
     draw();

@@ -8,6 +8,7 @@ var CONFIG = {
     maxLights : 20,
     groundShinies : 25,
     containerName : "main",
+    scoreLabelName : "score",
     ambientColor : 0x555555,
     groungColor : 0x555555,
     specularColor : 0xFFFFFF,

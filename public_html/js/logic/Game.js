@@ -13,6 +13,8 @@ Game.prototype = {
     
     isGameOver : false,
     
+    score : 0,
+    
     nextStep : function (frame) {
         if (!this.isGameOver && frame % CONFIG.snakeDelay === 0) {
             if (this.snake.move()) {
@@ -24,6 +26,14 @@ Game.prototype = {
         this.moveFireFlies(frame);
     },
     
+    updateScore : function () {
+        this.updateScoreHandler(++this.score);
+    },
+    
+    addUpdateScoreHandler : function (handler) {
+        this.updateScoreHandler = handler;
+    },
+    
     checkForCollision : function () {
         var headX = this.snake.body[0].x;
         var headY = this.snake.body[0].y;
@@ -32,6 +42,7 @@ Game.prototype = {
                 var position = this.getFreePosition();
                 this.fireflies[i].move(position.x, position.y);
                 this.snake.grow();
+                this.updateScore();
                 break;
             }
         }
