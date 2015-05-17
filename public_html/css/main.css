@@ -92,6 +92,13 @@ canvas {
 	opacity:.4;
 }
 
+#loseMessage{
+	font-smooth: never;
+	-webkit-font-smoothing : none;
+	opacity:.4;
+        font-size: 64pt;
+}
+
 .button:hover{
 	opacity: 1;
 }

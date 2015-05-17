@@ -12,6 +12,8 @@ var CONFIG = {
     playButtonName : "play_button",
     pauseButtonName : "pause_button",
     stopButtonName : "stop_button",
+    loseMessage : "Game Over !!!",
+    gameOverLabelName : "loseMessage",
     ambientColor : 0x555555,
     groungColor : 0x555555,
     specularColor : 0xFFFFFF,

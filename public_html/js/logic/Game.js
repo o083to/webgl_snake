@@ -31,6 +31,7 @@ Game.prototype = {
     
     stop : function () {
         this.isGameOver = true;
+        this.gameOverHandler();
     },
     
     nextStep : function (frame) {
@@ -38,7 +39,7 @@ Game.prototype = {
             if (this.snake.move()) {
                 this.checkForCollision();
             } else {
-                this.isGameOver = true;
+                this.stop();
             }
         }        
         this.moveFireFlies(frame);
@@ -50,6 +51,10 @@ Game.prototype = {
     
     addUpdateScoreHandler : function (handler) {
         this.updateScoreHandler = handler;
+    },
+    
+    addGameOverHandler : function (handler) {
+        this.gameOverHandler = handler;
     },
     
     checkForCollision : function () {
