@@ -12,6 +12,8 @@ var CONFIG = {
     playButtonName : "play_button",
     pauseButtonName : "pause_button",
     stopButtonName : "stop_button",
+    incSpeedButtonName : "inc_speed_button",
+    decSpeedButtonName : "dec_speed_button",
     loseMessage : "Game Over !!!",
     gameOverLabelName : "loseMessage",
     ambientColor : 0x555555,
@@ -28,7 +30,22 @@ var CONFIG = {
     initHeadY : 8,
     snakeDelay : 8,
     fireflyDelay : 24,
-    countOfFireflies : 4
+    delayRatio : 3,
+    minSnakeDelay : 1,
+    maxSnakeDelay : 16,
+    countOfFireflies : 4,
+    
+    incDelay : function () {
+        if (this.snakeDelay !== this.maxSnakeDelay) {
+            this.fireflyDelay = ++this.snakeDelay * this.delayRatio;
+        }
+    },
+    
+    decDelay : function () {
+        if (this.snakeDelay !== this.minSnakeDelay) {
+            this.fireflyDelay = --this.snakeDelay * this.delayRatio;
+        }
+    }
 };
 
 var DIRECTION = {

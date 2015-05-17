@@ -60,6 +60,8 @@ function addEvents () {
         document.getElementById(CONFIG.pauseButtonName).onclick = pauseButtonHandler.handleEvent.bind(pauseButtonHandler);
         var stopButtonHandler = new StopButtonHandler(game);
         document.getElementById(CONFIG.stopButtonName).onclick = stopButtonHandler.handleEvent.bind(stopButtonHandler);
+        document.getElementById(CONFIG.incSpeedButtonName).onclick = function () { CONFIG.decDelay(); };
+        document.getElementById(CONFIG.decSpeedButtonName).onclick = function () { CONFIG.incDelay(); };
     });
 }
 
