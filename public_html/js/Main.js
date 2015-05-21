@@ -1,4 +1,4 @@
-/* global THREE, CONFIG, Detector */
+/* global THREE, CONFIG, Detector, UTILS */
 
 function GameScene (game) {
     this.game = game;
@@ -10,17 +10,18 @@ GameScene.prototype = {
     frameCounter : 0,
     
     init : function () {
-        this.scene = createScene();
-        this.camera = createCamera();
-        this.renderer = createRenderer();
+        this.gameContainer = document.getElementById(CONFIG.containerName);
+        
+        this.scene = UTILS.createScene();
+        this.camera = UTILS.createCamera();
+        this.renderer = UTILS.createRenderer();
         
         this.addEvents(this.renderer, this.game);
         
-        var gameContainer = getGameContainer();
-        gameContainer.appendChild(this.renderer.domElement);
+        this.gameContainer.appendChild(this.renderer.domElement);
         
-        this.scene.add(createGround());
-        this.scene.add(createMainLight()); 
+        this.scene.add(UTILS.createGround());
+        this.scene.add(UTILS.createMainLight()); 
         
         this.snakeImage = new SnakeImage(this.game.snake, this.scene);
         
@@ -46,9 +47,8 @@ GameScene.prototype = {
     },
     
     updateRendererSize : function () {
-        var gameContainer = getGameContainer();
-        var availableWidth = gameContainer.offsetWidth;
-        var availableHeight = gameContainer.offsetHeight;
+        var availableWidth = this.gameContainer.offsetWidth;
+        var availableHeight = this.gameContainer.offsetHeight;
         var height = availableHeight;
         var width = Math.round(height * CONFIG.rendererRatio);
         if (width > availableWidth) {
@@ -83,60 +83,4 @@ function snakeGame () {
         var gameScene = new GameScene(game);
         gameScene.init();
     }
-}
-
-function createScene () {
-    return new THREE.Scene();
-}    
-
-function createCamera () {
-    var camera = new THREE.PerspectiveCamera( 30, CONFIG.rendererRatio, 0.1, 50 );
-    camera.position.z = 34;
-    camera.position.x = 0;
-    camera.position.y = 0;
-    return camera;
-}
-
-function createRenderer () {
-    var renderer = new THREE.WebGLRenderer();    
-    renderer.maxLights = CONFIG.maxLights;
-    renderer.shadowMapEnabled = true;
-    renderer.shadowMapType = THREE.BasicShadowMap;
-    return renderer;
-}
-
-function createGround () {
-    var groundMaterial = new THREE.MeshPhongMaterial({ 
-        ambient: CONFIG.ambientColor, 
-        color: CONFIG.groungColor, 
-        specular: CONFIG.specularColor, 
-        shininess: CONFIG.groundShinies, 
-        shading: THREE.NoShading 
-    });
-    groundMaterial.color.setHSL( 1,1,1 );
-
-    var groundGeo = new THREE.PlaneBufferGeometry(
-        CONFIG.boardWidth + CONFIG.boardAdditionalMargin, 
-        CONFIG.boardHeight + CONFIG.boardAdditionalMargin 
-    );
-
-    var ground = new THREE.Mesh(groundGeo, groundMaterial);
-    ground.position.y = 0;
-    ground.position.x = 0;
-    ground.position.z = -5;
-    ground.receiveShadow = true;	
-    ground.castShadow = true;	
-
-    return ground;
-}
-
-function createMainLight () {
-    var spotLight = new THREE.SpotLight(CONFIG.mainLightColor);
-    spotLight.position.set(0, 0, 90);
-    return spotLight;
-}
-
-function getGameContainer () {
-    var gameContainer = document.getElementById(CONFIG.containerName);
-    return gameContainer;
 }

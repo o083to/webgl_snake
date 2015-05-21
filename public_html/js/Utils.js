@@ -29,6 +29,57 @@ var UTILS = {
             }
         }
         return false;
+    },
+    
+    createScene : function () {
+        return new THREE.Scene();
+    },
+    
+    createCamera : function () {
+        var camera = new THREE.PerspectiveCamera( 30, CONFIG.rendererRatio, 0.1, 50 );
+        camera.position.z = 34;
+        camera.position.x = 0;
+        camera.position.y = 0;
+        return camera;
+    },
+    
+    createRenderer : function () {
+        var renderer = new THREE.WebGLRenderer();    
+        renderer.maxLights = CONFIG.maxLights;
+        renderer.shadowMapEnabled = true;
+        renderer.shadowMapType = THREE.BasicShadowMap;
+        return renderer;
+    },
+    
+    createGround : function () {
+        var groundMaterial = new THREE.MeshPhongMaterial({ 
+            ambient: CONFIG.ambientColor, 
+            color: CONFIG.groungColor, 
+            specular: CONFIG.specularColor, 
+            shininess: CONFIG.groundShinies, 
+            shading: THREE.NoShading 
+        });
+        groundMaterial.color.setHSL( 1,1,1 );
+
+        var groundGeo = new THREE.PlaneBufferGeometry(
+            CONFIG.boardWidth + CONFIG.boardAdditionalMargin, 
+            CONFIG.boardHeight + CONFIG.boardAdditionalMargin 
+        );
+
+        var ground = new THREE.Mesh(groundGeo, groundMaterial);
+        ground.position.y = 0;
+        ground.position.x = 0;
+        ground.position.z = -5;
+        ground.receiveShadow = true;	
+        ground.castShadow = true;	
+
+        return ground;
+    },
+    
+    createMainLight : function () {
+        var spotLight = new THREE.SpotLight(CONFIG.mainLightColor);
+        spotLight.position.set(0, 0, 90);
+        return spotLight;
     }
 };
 
