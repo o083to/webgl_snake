@@ -14,6 +14,7 @@ var CONFIG = {
     stopButtonName : "stop_button",
     incSpeedButtonName : "inc_speed_button",
     decSpeedButtonName : "dec_speed_button",
+    replayButtonName : "replay_button",
     loseMessage : "Game Over !!!",
     gameOverLabelName : "loseMessage",
     ambientColor : 0x555555,

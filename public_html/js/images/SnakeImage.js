@@ -4,14 +4,11 @@ SnakeImage = function (snake, scene) {
     this.snake = snake;
     this.scene = scene;
     
-    this.bodyImage = new Array(length);
-    for (var i = 0; i < snake.body.length; i++) {        
-        this.bodyImage[i] = createSnakeSegment(snake.body[i].x, snake.body[i].y);
-        scene.add(this.bodyImage[i]);
-    }
+    this.initBody();
     
     this.snake.addMovingHandler(this.movingHandler.bind(this));
     this.snake.addGrowthHandler(this.growthHandler.bind(this));
+    this.snake.addRevivalHandler(this.revivalHandler.bind(this));
 };
 
 SnakeImage.prototype = {
@@ -30,6 +27,25 @@ SnakeImage.prototype = {
         var tailImage = createSnakeSegment(tail.x, tail.y);
         this.bodyImage.push(tailImage);
         this.scene.add(tailImage);
+    },
+    
+    revivalHandler : function () {
+        this.removeBodyFromScene();
+        this.initBody();
+    },
+    
+    initBody : function () {
+        this.bodyImage = new Array(this.length);
+        for (var i = 0; i < this.snake.body.length; i++) {        
+            this.bodyImage[i] = createSnakeSegment(this.snake.body[i].x, this.snake.body[i].y);
+            this.scene.add(this.bodyImage[i]);
+        }
+    },
+    
+    removeBodyFromScene : function () {
+        for (var i = 0; i < this.bodyImage.length; i++) {
+            this.scene.remove(this.bodyImage[i]);
+        }
     }
 };
 

@@ -2,13 +2,8 @@
 
 Snake = function (length) {
     this.direction = DIRECTION.RIGHT;
-    this.body = new Array(length);
-    for (var i = 0; i < length; i++) {
-        this.body[i] = {
-            x : CONFIG.initHeadX - i,
-            y : CONFIG.initHeadY
-        };
-    }
+    this.length = length;
+    this.initBody();
 };
 
 Snake.prototype = {
@@ -64,5 +59,25 @@ Snake.prototype = {
     
     addGrowthHandler : function (handler) {
         this.growthHandler = handler;
+    },
+    
+    revive : function () {
+        this.direction = DIRECTION.RIGHT;
+        this.initBody();
+        this.revivalHandler();
+    },
+    
+    addRevivalHandler : function (handler) {
+        this.revivalHandler = handler;
+    },
+    
+    initBody : function () {
+        this.body = new Array(this.length);
+        for (var i = 0; i < this.length; i++) {
+            this.body[i] = {
+                x : CONFIG.initHeadX - i,
+                y : CONFIG.initHeadY
+            };
+        }
     }
 };

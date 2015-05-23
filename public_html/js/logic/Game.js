@@ -34,6 +34,17 @@ Game.prototype = {
         this.gameOverHandler();
     },
     
+    replay : function () {
+        this.resetScore();
+        this.snake.revive();
+        for (var i = 0; i < this.fireflies.length; i++) {
+            var position = this.getFreePosition();
+            this.fireflies[i].move(position.x, position.y);
+        }
+        this.isGameOver = false;
+        this.isPaused = false;
+    },
+    
     nextStep : function (frame) {
         if (!this.isPaused && !this.isGameOver && frame % CONFIG.snakeDelay === 0) {
             if (this.snake.move()) {
@@ -47,6 +58,11 @@ Game.prototype = {
     
     updateScore : function () {
         this.updateScoreHandler(++this.score);
+    },
+    
+    resetScore : function () {
+        this.score = 0;
+        this.updateScoreHandler(0);
     },
     
     addUpdateScoreHandler : function (handler) {

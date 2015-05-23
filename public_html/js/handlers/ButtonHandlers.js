@@ -33,3 +33,15 @@ StopButtonHandler.prototype = {
         this.game.stop();
     }
 };
+
+function ReplayButtonHandler(game) {
+    this.game = game;
+}
+
+ReplayButtonHandler.prototype = {
+    constructor : ReplayButtonHandler,
+    
+    handleEvent : function () {
+        this.game.replay();
+    }
+};
