@@ -4,7 +4,7 @@ var ATTEMPTS_TO_MOVE = 8;
 
 function Game () {
     this.snake = new Snake(CONFIG.initialSnakeLength);
-    this.fireflies = createFireflies();
+    this.createFireflies();
     this.initFrames = createFirstMovementFrames();
 }
 
@@ -78,7 +78,7 @@ Game.prototype = {
         var headY = this.snake.body[0].y;
         for (var i = 0; i < this.fireflies.length; i++) {
             if (headX === this.fireflies[i].x && headY === this.fireflies[i].y) {
-                var position = this.getFreePosition();
+                var position = this.getFreePositionOnBorder();
                 this.fireflies[i].move(position.x, position.y);
                 this.snake.grow();
                 this.updateScore();
@@ -117,32 +117,34 @@ Game.prototype = {
     },
     
     getFreePosition : function () {
-        var x, y;
+        var position;
         do {
-            x = UTILS.getRandomInt(0, CONFIG.maxX);
-            y = UTILS.getRandomInt(0, CONFIG.maxY);            
+            position = UTILS.getRandomPosition();
         } 
-        while (this.isFreePosition(x, y));
-        return { x : x, y : y};            
+        while (!this.isFreePosition(position.x, position.y));
+        return position;            
+    },
+    
+    getFreePositionOnBorder : function () {
+        var position;
+        do {
+            position = UTILS.getRandomPositionOnBorder();
+        } 
+        while (!this.isFreePosition(position.x, position.y));
+        return position;            
+    },
+    
+    createFireflies : function () {
+        this.fireflies = new Array();
+        for (var i = 0; i < CONFIG.countOfFireflies; i++) {
+            var position;
+            do {
+                position = UTILS.getRandomPosition();
+            } while (!this.isFreePosition(position.x, position.y));
+            this.fireflies.push(new Firefly(position.x, position.y));
+        }
     }
 };
-
-function createFireflies() {
-    var fireflies = new Array(CONFIG.countOfFireflies);
-    var usedXs = new Array();
-    var usedYs = new Array();
-    for (var i = 0; i < fireflies.length; i++) {
-        var x, y;
-        do {
-            x = UTILS.getRandomInt(0, CONFIG.maxX);
-            y = UTILS.getRandomInt(0, CONFIG.maxY);
-        } while ((usedXs.indexOf(x) !== -1) && (usedYs.indexOf(y) !== -1))
-        usedXs.push(x);
-        usedYs.push(y);
-        fireflies[i] = new Firefly(x, y);
-    }
-    return fireflies;
-}
 
 function createFirstMovementFrames() {
     var firstMovementFrames = new Array(CONFIG.countOfFireflies);

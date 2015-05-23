@@ -5,6 +5,25 @@ var UTILS = {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     },
     
+    getRandomPosition : function () {
+        return {
+            x : this.getRandomInt(0, CONFIG.maxX),
+            y : this.getRandomInt(0, CONFIG.maxY)
+        };
+    },
+    
+    getRandomPositionOnBorder : function () {
+        var x, y;
+        if (this.getRandomInt(0, 1) === 0) {
+            x = CONFIG.maxX * this.getRandomInt(0, 1);
+            y = this.getRandomInt(0, CONFIG.maxY);
+        } else {
+            y = CONFIG.maxY * this.getRandomInt(0, 1);
+            x = this.getRandomInt(0, CONFIG.maxX);
+        }
+        return { x : x, y : y };
+    },
+    
     toSceneX : function (x) {
         return CONFIG.x0 + x;
     },
