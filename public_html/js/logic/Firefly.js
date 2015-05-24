@@ -1,16 +1,16 @@
 /* global UTILS, CONFIG */
 
-function Firefly (x, y) {
-    this.x = x;
-    this.y = y;
+function Firefly (position) {
+    this.x = position.x;
+    this.y = position.y;
 }
 
 Firefly.prototype = {
     constructor : Firefly,
     
-    move : function (x, y) {
-        this.x = x;
-        this.y = y;
+    move : function (position) {
+        this.x = position.x;
+        this.y = position.y;
         this.movingHandler();
     },
     

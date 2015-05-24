@@ -22,7 +22,11 @@ function GameOverHandler(game, label) {
 GameOverHandler.prototype = {
     constructor : GameOverHandler,
      
-    handleEvent : function () {
-        this.label.innerHTML = CONFIG.loseMessage;
+    handleEvent : function (showMessage) {
+        if (showMessage) {
+            this.label.innerHTML = CONFIG.loseMessage;
+        } else {
+            this.label.innerHTML = '';
+        }
     }
 };
