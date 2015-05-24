@@ -10,6 +10,7 @@ GameScene.prototype = {
     frameCounter : 0,
     
     init : function () {
+        CONFIG.initDelay();
         this.gameContainer = document.getElementById(CONFIG.containerName);
         
         this.scene = UTILS.createScene();

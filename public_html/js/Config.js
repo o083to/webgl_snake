@@ -46,6 +46,13 @@ var CONFIG = {
         if (this.snakeDelay !== this.minSnakeDelay) {
             this.fireflyDelay = --this.snakeDelay * this.delayRatio;
         }
+    },
+    
+    initDelay : function () {
+        if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+            this.snakeDelay = this.minSnakeDelay;
+            this.fireflyDelay = this.snakeDelay * this.delayRatio;
+        }
     }
 };
 
