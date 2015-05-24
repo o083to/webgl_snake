@@ -121,7 +121,8 @@ Game.prototype = {
     
     isFreePosition : function (position) {
         return (!UTILS.arrayIncludesXY(this.snake.body, position.x, position.y) 
-                && !UTILS.arrayIncludesXY(this.fireflies, position.x, position.y));
+                && !UTILS.arrayIncludesXY(this.fireflies, position.x, position.y)
+                && this.checkForSnakesHead(position));
     },
     
     getFreePosition : function (randomFunction) {
@@ -161,6 +162,20 @@ Game.prototype = {
             x = UTILS.getRandomInt(0, CONFIG.maxX);
         }
         return { x : x, y : y };
+    },
+    
+    checkForSnakesHead : function (position) {
+        var headPosition = this.snake.body[0];
+        for (var dx = -1; dx <= 1; dx++) {
+            for (var dy = -1; dy <= 1; dy++) {
+                if (!(dx === 0 && dy === 0)) {
+                    if ((headPosition.x === position.x + dx) && (headPosition.y === position.y + dy)) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
 };
 
