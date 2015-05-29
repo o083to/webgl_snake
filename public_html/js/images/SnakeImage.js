@@ -1,4 +1,4 @@
-/* global THREE, CONFIG, UTILS */
+/* global THREE, CONFIG, UTILS, IMAGE_UTILS */
 
 SnakeImage = function (snake, scene) {
     this.snake = snake;
@@ -24,7 +24,7 @@ SnakeImage.prototype = {
     
     growthHandler : function () {
         var tail = this.snake.body[this.snake.body.length - 1];
-        var tailImage = createSnakeSegment(tail.x, tail.y);
+        var tailImage = IMAGE_UTILS.createSnakeSegment(tail.x, tail.y);
         this.bodyImage.push(tailImage);
         this.scene.add(tailImage);
     },
@@ -37,7 +37,7 @@ SnakeImage.prototype = {
     initBody : function () {
         this.bodyImage = new Array(this.length);
         for (var i = 0; i < this.snake.body.length; i++) {        
-            this.bodyImage[i] = createSnakeSegment(this.snake.body[i].x, this.snake.body[i].y);
+            this.bodyImage[i] = IMAGE_UTILS.createSnakeSegment(this.snake.body[i].x, this.snake.body[i].y);
             this.scene.add(this.bodyImage[i]);
         }
     },
@@ -48,11 +48,6 @@ SnakeImage.prototype = {
         }
     }
 };
-
-function createSnakeSegment(x, y) {
-    var material = new THREE.MeshLambertMaterial({color: 0xB0C4DE});
-    return UTILS.createSphere(CONFIG.snakeSegmentRadius, UTILS.toSceneX(x), UTILS.toSceneY(y), material);
-}
 
 function replaceSegment(segment, x, y) {
     segment.position.x = UTILS.toSceneX(x);

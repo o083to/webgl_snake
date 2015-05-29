@@ -20,7 +20,6 @@ var CONFIG = {
     ambientColor : 0x555555,
     groungColor : 0x555555,
     specularColor : 0xFFFFFF,
-    mainLightColor : 0x151B15,
     initialSnakeLength : 5,
     playersZ : 0,
     snakeSegmentRadius : 0.5,

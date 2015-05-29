@@ -1,11 +1,10 @@
-/* global THREE, CONFIG, UTILS */
+/* global THREE, CONFIG, UTILS, IMAGE_UTILS */
 
 function FireflyImage (firefly, scene) {
     this.firefly = firefly;
     this.scene = scene;
     
-    var material = new THREE.MeshLambertMaterial({color: 0xB0C4DE});
-    this.image = UTILS.createSphere(CONFIG.fireflyRadius, UTILS.toSceneX(firefly.x), UTILS.toSceneY(firefly.y), material);
+    this.image = IMAGE_UTILS.createFirefly(UTILS.toSceneX(firefly.x), UTILS.toSceneY(firefly.y));
     scene.add(this.image);
     
     this.firefly.addMovingHandler(this.movingHandler.bind(this));

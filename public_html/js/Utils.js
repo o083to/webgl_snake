@@ -19,6 +19,7 @@ var UTILS = {
         sphere.position.x = x;
         sphere.position.y = y;
         sphere.position.z = CONFIG.playersZ;
+        sphere.add(new THREE.PointLight());
         return sphere;
     },
     
@@ -49,37 +50,6 @@ var UTILS = {
         renderer.shadowMapEnabled = true;
         renderer.shadowMapType = THREE.BasicShadowMap;
         return renderer;
-    },
-    
-    createGround : function () {
-        var groundMaterial = new THREE.MeshPhongMaterial({ 
-            ambient: CONFIG.ambientColor, 
-            color: CONFIG.groungColor, 
-            specular: CONFIG.specularColor, 
-            shininess: CONFIG.groundShinies, 
-            shading: THREE.NoShading 
-        });
-        groundMaterial.color.setHSL( 1,1,1 );
-
-        var groundGeo = new THREE.PlaneBufferGeometry(
-            CONFIG.boardWidth + CONFIG.boardAdditionalMargin, 
-            CONFIG.boardHeight + CONFIG.boardAdditionalMargin 
-        );
-
-        var ground = new THREE.Mesh(groundGeo, groundMaterial);
-        ground.position.y = 0;
-        ground.position.x = 0;
-        ground.position.z = -5;
-        ground.receiveShadow = true;	
-        ground.castShadow = true;	
-
-        return ground;
-    },
-    
-    createMainLight : function () {
-        var spotLight = new THREE.SpotLight(CONFIG.mainLightColor);
-        spotLight.position.set(0, 0, 90);
-        return spotLight;
     }
 };
 
