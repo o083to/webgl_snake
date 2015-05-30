@@ -13,9 +13,9 @@ GameScene.prototype = {
         CONFIG.initDelay();
         this.gameContainer = document.getElementById(CONFIG.containerName);
         
-        this.scene = UTILS.createScene();
-        this.camera = UTILS.createCamera();
-        this.renderer = UTILS.createRenderer();
+        this.scene = IMAGE_UTILS.createScene();
+        this.camera = IMAGE_UTILS.createCamera();
+        this.renderer = IMAGE_UTILS.createRenderer();
         
         this.addEvents(this.renderer, this.game);
         

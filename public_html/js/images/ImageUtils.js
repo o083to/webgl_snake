@@ -88,5 +88,25 @@ var IMAGE_UTILS = {
         light.position.y = y;
         light.position.z = CONFIG.playersZ;
         return light;
+    },
+    
+    createScene : function () {
+        return new THREE.Scene();
+    },
+    
+    createCamera : function () {
+        var camera = new THREE.PerspectiveCamera( 30, CONFIG.rendererRatio, 0.1, 50 );
+        camera.position.z = 34;
+        camera.position.x = 0;
+        camera.position.y = 0;
+        return camera;
+    },
+    
+    createRenderer : function () {
+        var renderer = new THREE.WebGLRenderer();    
+        renderer.maxLights = CONFIG.maxLights;
+        renderer.shadowMapEnabled = true;
+        renderer.shadowMapType = THREE.BasicShadowMap;
+        return renderer;
     }
 };
