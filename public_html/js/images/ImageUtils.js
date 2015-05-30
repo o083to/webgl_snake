@@ -7,11 +7,9 @@ FIREFLY_LIGHT_INTENSITY = 2;
 FIREFLY_LIGHT_DISTANCE = 15;
 FIREFLY_RADIUS = 0.3;
 
-var COLORS = {
-    mainLightColor : 0xE7F9AE,
-    groundColor : 0x551A8B,
-    snakeColor : 0xB0C4DE
-};
+GROUND_COLOR = 0x330033;
+MAIN_LIGHT_COLOR = 0x97FFFF;
+SNAKE_COLOR = 0xB0C4DE;
 
 var FIREFLY_COLORS = [
     0xFFD700 // gold
@@ -28,14 +26,14 @@ var FIREFLY_COLORS = [
 var IMAGE_UTILS = {
     
     createMainLight : function () {
-        var spotLight = new THREE.SpotLight(COLORS.mainLightColor);
+        var spotLight = new THREE.SpotLight(MAIN_LIGHT_COLOR);
         spotLight.position.set(0, 0, 90);
         return spotLight;
     },
     
     createGround : function () {
         var material = new THREE.MeshLambertMaterial({
-            color : COLORS.groundColor    
+            color : GROUND_COLOR    
         });
 
         var groundGeo = new THREE.PlaneBufferGeometry(
@@ -59,7 +57,7 @@ var IMAGE_UTILS = {
         var modifier = new THREE.SubdivisionModifier(DIVISIONS);
         modifier.modify(geometry);
         var material = new THREE.MeshPhongMaterial({
-            color: COLORS.snakeColor, 
+            color: SNAKE_COLOR, 
             specular: 0xffffff, 
             shininess: 50, 
             transparent:true, 
