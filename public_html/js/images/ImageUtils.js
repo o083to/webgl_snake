@@ -3,25 +3,14 @@
 SEGMENTS_SIZE = 1.2;
 SEGMENTS_DEPTH = 0.5;
 DIVISIONS = 3;
-FIREFLY_LIGHT_INTENSITY = 2;
+FIREFLY_LIGHT_INTENSITY = 3;
 FIREFLY_LIGHT_DISTANCE = 15;
 FIREFLY_RADIUS = 0.3;
 
 GROUND_COLOR = 0x330033;
 MAIN_LIGHT_COLOR = 0x97FFFF;
 SNAKE_COLOR = 0xB0C4DE;
-
-var FIREFLY_COLORS = [
-    0xFFD700 // gold
-    ,0xADFF2F // green yellow
-    ,0x00FFFF // aqua
-    ,0xBA55D3 // medium orchid
-    ,0x4169E1 // royal blue
-    ,0x87CEFA // light sky blue
-    ,0x32CD32 // lime green
-    ,0xFFA500 // orange
-    ,0xFF7F50 // coral
-];
+FIREFLY_COLOR = 0xFFFF00;
 
 var IMAGE_UTILS = {
     
@@ -45,8 +34,6 @@ var IMAGE_UTILS = {
         ground.position.y = 0;
         ground.position.x = 0;
         ground.position.z = -5;
-        ground.receiveShadow = true;	
-        ground.castShadow = true;	
 
         return ground;
     },
@@ -66,22 +53,24 @@ var IMAGE_UTILS = {
         var segment = new THREE.Mesh(geometry, material);
         segment.position.x = UTILS.toSceneX(x);
         segment.position.y = UTILS.toSceneY(y);
-        segment.position.z = CONFIG.playersZ;
+        segment.position.z = CONFIG.playersZ;    
+        segment.receiveShadow = true;
+        segment.castShadow = true;	
         return segment;
     },
     
     createFirefly : function (x, y) {
-        var color = FIREFLY_COLORS[UTILS.getRandomInt(0, FIREFLY_COLORS.length - 1)];
+        var color = FIREFLY_COLOR;
         var light = new THREE.PointLight( 
                 color, 
                 FIREFLY_LIGHT_INTENSITY, 
                 FIREFLY_LIGHT_DISTANCE 
         );
         var sphere = new THREE.SphereGeometry(FIREFLY_RADIUS, 8, 8);
-        var material = new THREE.MeshPhongMaterial({
-            color: color, 
-            specular: 0xffffff, 
-            shininess: 50
+        var material = new THREE.MeshLambertMaterial({
+            color: color//, 
+//            specular: 0xffffff, 
+//            shininess: 50
         });
         light.add(new THREE.Mesh( sphere, material ));
         light.position.x = x;
