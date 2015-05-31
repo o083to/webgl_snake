@@ -73,6 +73,8 @@ Snake.prototype = {
     decrease : function (count) {
         var isAlive = true;
         var newLength = this.body.length - count;
+        this.oldTailX = this.body[newLength].x;
+        this.oldTailY = this.body[newLength].y;
         if (newLength < CONFIG.minSnakeLength) {
             newLength = 2;
             isAlive = false;
