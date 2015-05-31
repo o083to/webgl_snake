@@ -37,7 +37,7 @@ Game.prototype = {
     },
     
     replay : function () {
-        this.resetScore();
+        this.reset();
         this.gameOverHandler(HIDE_GAME_OVER_MESSAGE);
         this.snake.revive();
         for (var i = 0; i < this.fireflies.length; i++) {
@@ -76,9 +76,13 @@ Game.prototype = {
         this.updateScoreHandler(++this.score);
     },
     
-    resetScore : function () {
+    reset : function () {
         this.score = 0;
         this.updateScoreHandler(0);
+        this.level = 1;
+        this.updateLevelHandler(1);
+        this.remainingSteps = CONFIG.initialStepsForLevel;
+        this.remainingStepsHandler(this.remainingSteps);
     },
     
     addUpdateScoreHandler : function (handler) {
