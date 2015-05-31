@@ -23,7 +23,7 @@ html, body {
 body {
 	font-family: 'wendyregular';
 	color: white;
-	font-size: 32pt;
+	font-size: 28pt;
 }
 
 a, a:hover, a:active, a:visited{
@@ -86,7 +86,7 @@ canvas {
 	opacity: .4;
 }
 
-#score{
+.info{
 	font-smooth: never;
 	-webkit-font-smoothing : none;
 	opacity:.4;
