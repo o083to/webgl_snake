@@ -33,6 +33,8 @@ GameScene.prototype = {
         
         this.scoreHandler = new UpdateScoreHandler(this.game, document.getElementById(CONFIG.scoreLabelName));
         this.gameOverHandler = new GameOverHandler(this.game, document.getElementById(CONFIG.gameOverLabelName));
+        this.levelHandler = new UpdateLevelHandler(this.game, document.getElementById(CONFIG.levelLabelName));
+        this.remainingStepsHandler = new RemainigStepsHandler(this.game, document.getElementById(CONFIG.remainingStepsLabelName));
         
         this.updateRendererSize();
         this.draw();

@@ -30,3 +30,29 @@ GameOverHandler.prototype = {
         }
     }
 };
+
+function UpdateLevelHandler(game, label) {
+    this.label = label;
+    game.addUpdateLevelHandler(this.handleEvent.bind(this));
+}
+
+UpdateLevelHandler.prototype = {
+    constructor : UpdateLevelHandler,
+    
+    handleEvent : function(level) {
+        this.label.innerHTML = level;
+    }
+};
+
+function RemainigStepsHandler(game, label) {
+    this.label = label;
+    game.addRemainingStepsHandler(this.handleEvent.bind(this));
+}
+
+RemainigStepsHandler.prototype = {
+    constructor : RemainigStepsHandler,
+    
+    handleEvent : function(remainingSteps) {
+        this.label.innerHTML = remainingSteps;
+    }
+};

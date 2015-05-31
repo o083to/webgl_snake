@@ -6,9 +6,10 @@ var CONFIG = {
     boardAdditionalMargin : 5,
     rendererRatio : 16/9,
     maxLights : 20,
-    groundShinies : 25,
     containerName : "main",
     scoreLabelName : "score",
+    levelLabelName : "level",
+    remainingStepsLabelName : "time_left",
     playButtonName : "play_button",
     pauseButtonName : "pause_button",
     stopButtonName : "stop_button",
@@ -17,13 +18,8 @@ var CONFIG = {
     replayButtonName : "replay_button",
     loseMessage : "Game Over !!!",
     gameOverLabelName : "loseMessage",
-    ambientColor : 0x555555,
-    groungColor : 0x555555,
-    specularColor : 0xFFFFFF,
     initialSnakeLength : 5,
     playersZ : 0,
-    snakeSegmentRadius : 0.5,
-    fireflyRadius : 0.5,
     x0 : -15.5,
     y0 : -8.5,
     initHeadX : 16,
@@ -34,6 +30,7 @@ var CONFIG = {
     minSnakeDelay : 1,
     maxSnakeDelay : 16,
     countOfFireflies : 4,
+    initialStepsForLevel : 150,
     
     incDelay : function () {
         if (this.snakeDelay !== this.maxSnakeDelay) {

@@ -13,11 +13,11 @@ function Game () {
 Game.prototype = {
     constructor : Game,
     
-    isGameOver : false,
-    
-    isPaused : false,
-    
-    score : 0,
+    isGameOver : false,    
+    isPaused : false,    
+    score : 0,    
+    level : 1,
+    remainingSteps : CONFIG.initialStepsForLevel,
     
     suspend : function () {
         if (!this.isGameOver) {
@@ -53,6 +53,7 @@ Game.prototype = {
             if (frame % CONFIG.snakeDelay === 0) {
                 if (this.snake.move()) {
                     this.checkForCollision();
+                    this.checkRemainingSteps();
                 } else {
                     this.stop();
                     return;
@@ -60,6 +61,15 @@ Game.prototype = {
             }
             this.moveFireFlies(frame);
         }         
+    },
+    
+    checkRemainingSteps : function() {
+        this.remainingSteps--;
+        if (this.remainingSteps === 0) {
+            this.remainingSteps = CONFIG.initialStepsForLevel;
+            this.updateLevelHandler(++this.level);
+        }
+        this.remainingStepsHandler(this.remainingSteps);
     },
     
     updateScore : function () {
@@ -77,6 +87,14 @@ Game.prototype = {
     
     addGameOverHandler : function (handler) {
         this.gameOverHandler = handler;
+    },
+    
+    addUpdateLevelHandler : function (handler) {
+        this.updateLevelHandler = handler;
+    },
+    
+    addRemainingStepsHandler : function (handler) {
+        this.remainingStepsHandler = handler;
     },
     
     checkForCollision : function () {
