@@ -14,7 +14,15 @@ Firefly.prototype = {
         this.movingHandler();
     },
     
+    die : function () {
+        this.deathHandler();
+    },
+    
     addMovingHandler : function (handler) {
         this.movingHandler = handler;
+    },
+    
+    addDeathHandler : function (handler) {
+        this.deathHandler = handler;
     }
 };

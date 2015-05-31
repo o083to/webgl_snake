@@ -66,10 +66,16 @@ Game.prototype = {
     checkRemainingSteps : function() {
         this.remainingSteps--;
         if (this.remainingSteps === 0) {
-            this.remainingSteps = CONFIG.initialStepsForLevel;
-            this.updateLevelHandler(++this.level);
+            this.changeLevel();
+        } else {
+            this.remainingStepsHandler(this.remainingSteps);
         }
+    },
+    
+    changeLevel : function() {
+        this.remainingSteps = CONFIG.initialStepsForLevel;
         this.remainingStepsHandler(this.remainingSteps);
+        this.updateLevelHandler(++this.level);
     },
     
     updateScore : function () {
@@ -102,17 +108,22 @@ Game.prototype = {
     },
     
     checkForCollision : function () {
-        var headX = this.snake.body[0].x;
-        var headY = this.snake.body[0].y;
         for (var i = 0; i < this.fireflies.length; i++) {
-            if (headX === this.fireflies[i].x && headY === this.fireflies[i].y) {
-                var position = this.getFreePosition(this.getRandomPositionOnBorder);
-                this.fireflies[i].move(position);
+            if (UTILS.positionsEquals(this.snake.body[0], this.fireflies[i])) {
+                this.killFirefly(i);
                 this.snake.grow();
                 this.updateScore();
+                if (this.fireflies.length === 0) {
+                    this.changeLevel();
+                }
                 break;
             }
         }
+    },
+    
+    killFirefly : function(i) {
+        this.fireflies[i].die();
+        this.fireflies.splice(i, 1);
     },
     
     moveFireFlies : function (frame) {

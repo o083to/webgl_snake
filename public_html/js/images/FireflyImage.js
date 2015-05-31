@@ -8,6 +8,7 @@ function FireflyImage (firefly, scene) {
     scene.add(this.image);
     
     this.firefly.addMovingHandler(this.movingHandler.bind(this));
+    this.firefly.addDeathHandler(this.deathHandler.bind(this));
 }
 
 FireflyImage.prototype = {
@@ -15,6 +16,10 @@ FireflyImage.prototype = {
     
     movingHandler : function () {
         replaceImage(this.image, this.firefly.x, this.firefly.y);
+    },
+    
+    deathHandler : function () {
+        this.scene.remove(this.image);
     }
 };
 

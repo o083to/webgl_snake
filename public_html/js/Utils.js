@@ -20,6 +20,10 @@ var UTILS = {
             }
         }
         return false;
+    },
+    
+    positionsEquals : function(a, b) {
+        return (a.x === b.x && a.y === b.y);
     }
 };
 
