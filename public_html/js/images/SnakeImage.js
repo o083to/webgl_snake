@@ -9,6 +9,7 @@ SnakeImage = function (snake, scene) {
     this.snake.addMovingHandler(this.movingHandler.bind(this));
     this.snake.addGrowthHandler(this.growthHandler.bind(this));
     this.snake.addRevivalHandler(this.revivalHandler.bind(this));
+    this.snake.addDecreaseHandler(this.decreaseHandler.bind(this));
 };
 
 SnakeImage.prototype = {
@@ -32,6 +33,14 @@ SnakeImage.prototype = {
     revivalHandler : function () {
         this.removeBodyFromScene();
         this.initBody();
+    },
+    
+    decreaseHandler : function () {
+        var newLength = this.snake.body.length;
+        for (var i = this.bodyImage.length - 1; i >= newLength; i--) {
+            this.scene.remove(this.bodyImage[i]);
+        }
+        this.bodyImage.splice(newLength, this.bodyImage.length - newLength);
     },
     
     initBody : function () {

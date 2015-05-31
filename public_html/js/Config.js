@@ -19,6 +19,7 @@ var CONFIG = {
     loseMessage : "Game Over !!!",
     gameOverLabelName : "loseMessage",
     initialSnakeLength : 5,
+    minSnakeLength : 3,
     playersZ : 0,
     x0 : -15.5,
     y0 : -8.5,

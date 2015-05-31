@@ -40,10 +40,8 @@ Game.prototype = {
         this.reset();
         this.gameOverHandler(HIDE_GAME_OVER_MESSAGE);
         this.snake.revive();
-        for (var i = 0; i < this.fireflies.length; i++) {
-            var position = this.getFreePosition(this.getRandomPosition);
-            this.fireflies[i].move(position);
-        }
+        this.killOldFireflies();
+        this.reviveFireflies();
         this.isGameOver = false;
         this.isPaused = false;
     },
@@ -66,7 +64,7 @@ Game.prototype = {
     checkRemainingSteps : function() {
         this.remainingSteps--;
         if (this.remainingSteps === 0) {
-            this.changeLevel();
+            this.onLevelStepsRanOut();
         } else {
             this.remainingStepsHandler(this.remainingSteps);
         }
@@ -76,7 +74,21 @@ Game.prototype = {
         this.remainingSteps = CONFIG.initialStepsForLevel;
         this.remainingStepsHandler(this.remainingSteps);
         this.updateLevelHandler(++this.level);
+    },
+    
+    onFirefliesRanOut : function () {
+        this.changeLevel();
         this.reviveFireflies();
+    },
+    
+    onLevelStepsRanOut : function () {
+        if (this.snake.decrease(this.fireflies.length)) {
+            this.killOldFireflies();
+            this.changeLevel();
+            this.reviveFireflies();
+        } else {
+            this.stop();
+        }
     },
     
     updateScore : function () {
@@ -119,10 +131,16 @@ Game.prototype = {
                 this.snake.grow();
                 this.updateScore();
                 if (this.fireflies.length === 0) {
-                    this.changeLevel();
+                    this.onFirefliesRanOut();
                 }
                 break;
             }
+        }
+    },
+    
+    killOldFireflies : function () {
+        for (var i = 0; i < this.fireflies.length; i++) {
+            this.fireflies[i].die();
         }
     },
     

@@ -2,8 +2,7 @@
 
 Snake = function (length) {
     this.direction = DIRECTION.RIGHT;
-    this.length = length;
-    this.initBody();
+    this.initBody(length);
 };
 
 Snake.prototype = {
@@ -63,7 +62,7 @@ Snake.prototype = {
     
     revive : function () {
         this.direction = DIRECTION.RIGHT;
-        this.initBody();
+        this.initBody(CONFIG.initialSnakeLength);
         this.revivalHandler();
     },
     
@@ -71,9 +70,25 @@ Snake.prototype = {
         this.revivalHandler = handler;
     },
     
-    initBody : function () {
-        this.body = new Array(this.length);
-        for (var i = 0; i < this.length; i++) {
+    decrease : function (count) {
+        var isAlive = true;
+        var newLength = this.body.length - count;
+        if (newLength < CONFIG.minSnakeLength) {
+            newLength = 2;
+            isAlive = false;
+        } 
+        this.body.splice(newLength, count);
+        this.decreaseHandler();
+        return isAlive;
+    },
+    
+    addDecreaseHandler : function (handler) {
+        this.decreaseHandler = handler;
+    },
+    
+    initBody : function (length) {
+        this.body = new Array(length);
+        for (var i = 0; i < length; i++) {
             this.body[i] = {
                 x : CONFIG.initHeadX - i,
                 y : CONFIG.initHeadY
