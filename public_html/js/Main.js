@@ -26,10 +26,10 @@ GameScene.prototype = {
         
         this.snakeImage = new SnakeImage(this.game.snake, this.scene);
         
-        this.fireflyImages = new Array(CONFIG.countOfFireflies);
-        for (var i = 0; i < this.fireflyImages.length; i++) {
-            this.fireflyImages[i] = new FireflyImage(this.game.fireflies[i], this.scene);
+        for (var i = 0; i < this.game.fireflies.length; i++) {
+            this.drawFirefly(this.game.fireflies[i]);
         }
+        this.game.addFireflyCreationHandler(this.drawFirefly.bind(this));
         
         this.scoreHandler = new UpdateScoreHandler(this.game, document.getElementById(CONFIG.scoreLabelName));
         this.gameOverHandler = new GameOverHandler(this.game, document.getElementById(CONFIG.gameOverLabelName));
@@ -38,6 +38,10 @@ GameScene.prototype = {
         
         this.updateRendererSize();
         this.draw();
+    },
+     
+    drawFirefly : function (firefly) {
+        new FireflyImage(firefly, this.scene);
     },
     
     draw : function () {

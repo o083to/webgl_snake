@@ -76,6 +76,7 @@ Game.prototype = {
         this.remainingSteps = CONFIG.initialStepsForLevel;
         this.remainingStepsHandler(this.remainingSteps);
         this.updateLevelHandler(++this.level);
+        this.reviveFireflies();
     },
     
     updateScore : function () {
@@ -89,6 +90,10 @@ Game.prototype = {
         this.updateLevelHandler(1);
         this.remainingSteps = CONFIG.initialStepsForLevel;
         this.remainingStepsHandler(this.remainingSteps);
+    },
+    
+    addFireflyCreationHandler : function (handler) {
+        this.fireflyCreationHandler = handler;
     },
     
     addUpdateScoreHandler : function (handler) {
@@ -176,6 +181,13 @@ Game.prototype = {
             } while (!this.isFreePosition(position));
             this.fireflies.push(new Firefly(position));
         }
+    },
+    
+    reviveFireflies : function () {
+       this.createFireflies() ;
+       for (var i = 0; i < this.fireflies.length; i++) {
+           this.fireflyCreationHandler(this.fireflies[i]);
+       }
     },
     
     getRandomPosition : function () {
