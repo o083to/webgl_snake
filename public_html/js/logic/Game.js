@@ -6,8 +6,7 @@ var HIDE_GAME_OVER_MESSAGE = false;
 
 function Game () {
     this.snake = new Snake(CONFIG.initialSnakeLength);
-    this.createFireflies();
-    this.initFrames = createFirstMovementFrames();
+    this.createFireflies();    
 }
 
 Game.prototype = {
@@ -18,6 +17,7 @@ Game.prototype = {
     score : 0,    
     level : 1,
     remainingSteps : CONFIG.initialStepsForLevel,
+    countOfFireflies : CONFIG.countOfFireflies,
     
     suspend : function () {
         if (!this.isGameOver) {
@@ -71,6 +71,7 @@ Game.prototype = {
     },
     
     changeLevel : function() {
+        this.countOfFireflies++;
         this.remainingSteps = CONFIG.initialStepsForLevel;
         this.remainingStepsHandler(this.remainingSteps);
         this.updateLevelHandler(++this.level);
@@ -192,13 +193,14 @@ Game.prototype = {
     
     createFireflies : function () {
         this.fireflies = new Array();
-        for (var i = 0; i < CONFIG.countOfFireflies; i++) {
+        for (var i = 0; i < this.countOfFireflies; i++) {
             var position;
             do {
                 position = this.getRandomPosition();
             } while (!this.isFreePosition(position));
             this.fireflies.push(new Firefly(position));
         }
+        this.initFrames = createFirstMovementFrames(this.countOfFireflies);
     },
     
     reviveFireflies : function () {
@@ -242,8 +244,8 @@ Game.prototype = {
     }
 };
 
-function createFirstMovementFrames() {
-    var firstMovementFrames = new Array(CONFIG.countOfFireflies);
+function createFirstMovementFrames(count) {
+    var firstMovementFrames = new Array(count);
     for (var i = 0; i < firstMovementFrames.length; i++) {
         firstMovementFrames[i] = UTILS.getRandomInt(0, CONFIG.fireflyDelay);
     }
