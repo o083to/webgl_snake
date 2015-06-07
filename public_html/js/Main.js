@@ -70,14 +70,10 @@ GameScene.prototype = {
             window.onresize = this.updateRendererSize;
             document.addEventListener('keydown', new KeyDownHandler(game));
             renderer.domElement.addEventListener('touchstart', new TouchStartHandler(game));
-            var playButtonHandler = new PlayButtonHandler(game);
-            document.getElementById(CONFIG.playButtonName).onclick = playButtonHandler.handleEvent.bind(playButtonHandler);
-            var pauseButtonHandler = new SuspendButtonHandler(game);
-            document.getElementById(CONFIG.pauseButtonName).onclick = pauseButtonHandler.handleEvent.bind(pauseButtonHandler);
-            var stopButtonHandler = new StopButtonHandler(game);
-            document.getElementById(CONFIG.stopButtonName).onclick = stopButtonHandler.handleEvent.bind(stopButtonHandler);
-            var replayButtonHandler = new ReplayButtonHandler(game);
-            document.getElementById(CONFIG.replayButtonName).onclick = replayButtonHandler.handleEvent.bind(replayButtonHandler);
+            document.getElementById(CONFIG.playButtonName).onclick = createPlayButtonHandler(game);
+            document.getElementById(CONFIG.pauseButtonName).onclick = createPauseButtonHandler(game);
+            document.getElementById(CONFIG.stopButtonName).onclick = createStopButtonHandler(game);
+            document.getElementById(CONFIG.replayButtonName).onclick = createReplayButtonHandler(game);
             document.getElementById(CONFIG.incSpeedButtonName).onclick = function () { CONFIG.decDelay(); };
             document.getElementById(CONFIG.decSpeedButtonName).onclick = function () { CONFIG.incDelay(); };
         });

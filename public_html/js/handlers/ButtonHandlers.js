@@ -1,47 +1,23 @@
-function PlayButtonHandler(game) {
-    this.game = game;
+function createPlayButtonHandler(game) {
+    return function () {
+        game.resume();
+    };
 }
 
-PlayButtonHandler.prototype = {
-    constructor : PlayButtonHandler,
-    
-    handleEvent : function () {
-        this.game.resume();
-    }
-};
-
-function SuspendButtonHandler(game) {
-    this.game = game;
+function createPauseButtonHandler(game) {
+    return function () {
+        game.suspend();
+    };
 }
 
-SuspendButtonHandler.prototype = {
-    constructor : SuspendButtonHandler,
-    
-    handleEvent : function () {
-        this.game.suspend();
-    }
-};
-
-function StopButtonHandler(game) {
-    this.game = game;
+function createStopButtonHandler(game) {
+    return function () {
+        game.stop();
+    };
 }
 
-StopButtonHandler.prototype = {
-    constructor : StopButtonHandler,
-    
-    handleEvent : function () {
-        this.game.stop();
-    }
-};
-
-function ReplayButtonHandler(game) {
-    this.game = game;
+function createReplayButtonHandler(game) {
+    return function () {
+        game.replay();
+    };
 }
-
-ReplayButtonHandler.prototype = {
-    constructor : ReplayButtonHandler,
-    
-    handleEvent : function () {
-        this.game.replay();
-    }
-};
