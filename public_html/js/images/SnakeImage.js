@@ -1,4 +1,4 @@
-/* global THREE, CONFIG, UTILS, IMAGE_UTILS */
+/* global THREE, CONFIG */
 
 SnakeImage = function (snake, scene) {
     this.snake = snake;
@@ -25,7 +25,7 @@ SnakeImage.prototype = {
     
     growthHandler : function () {
         var tail = this.snake.body[this.snake.body.length - 1];
-        var tailImage = IMAGE_UTILS.createSnakeSegment(tail.x, tail.y);
+        var tailImage = createSnakeSegment(tail.x, tail.y);
         this.bodyImage.push(tailImage);
         this.scene.add(tailImage);
     },
@@ -46,7 +46,7 @@ SnakeImage.prototype = {
     initBody : function () {
         this.bodyImage = new Array(this.length);
         for (var i = 0; i < this.snake.body.length; i++) {        
-            this.bodyImage[i] = IMAGE_UTILS.createSnakeSegment(this.snake.body[i].x, this.snake.body[i].y);
+            this.bodyImage[i] = createSnakeSegment(this.snake.body[i].x, this.snake.body[i].y);
             this.scene.add(this.bodyImage[i]);
         }
     },
@@ -59,6 +59,6 @@ SnakeImage.prototype = {
 };
 
 function replaceSegment(segment, x, y) {
-    segment.position.x = UTILS.toSceneX(x);
-    segment.position.y = UTILS.toSceneY(y);
+    segment.position.x = toSceneX(x);
+    segment.position.y = toSceneY(y);
 }

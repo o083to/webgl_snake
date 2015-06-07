@@ -1,4 +1,4 @@
-/* global CONFIG, UTILS */
+/* global CONFIG */
 
 var ATTEMPTS_TO_MOVE = 8;
 var SHOW_GAME_OVER_MESSAGE = true;
@@ -127,7 +127,7 @@ Game.prototype = {
     
     checkForCollision : function () {
         for (var i = 0; i < this.fireflies.length; i++) {
-            if (UTILS.positionsEquals(this.snake.body[0], this.fireflies[i])) {
+            if (positionsEquals(this.snake.body[0], this.fireflies[i])) {
                 this.killFirefly(i);
                 this.snake.grow();
                 this.updateScore();
@@ -156,8 +156,8 @@ Game.prototype = {
                 for (var j = 0; j < ATTEMPTS_TO_MOVE; j++) {
                     var dx, dy;
                     do {
-                        dx = UTILS.getRandomInt(-1, 1);
-                        dy = UTILS.getRandomInt(-1, 1);
+                        dx = getRandomInt(-1, 1);
+                        dy = getRandomInt(-1, 1);
                     } while (dx === 0 && dy === 0);
                     var position = {
                         x : correctX(this.fireflies[i].x + dx),
@@ -177,8 +177,8 @@ Game.prototype = {
     },
     
     isFreePosition : function (position) {
-        return (!UTILS.arrayIncludesXY(this.snake.body, position.x, position.y) 
-                && !UTILS.arrayIncludesXY(this.fireflies, position.x, position.y)
+        return (!arrayIncludesXY(this.snake.body, position.x, position.y) 
+                && !arrayIncludesXY(this.fireflies, position.x, position.y)
                 && this.checkForSnakesHead(position));
     },
     
@@ -212,21 +212,9 @@ Game.prototype = {
     
     getRandomPosition : function () {
         return {
-            x : UTILS.getRandomInt(0, CONFIG.maxX),
-            y : UTILS.getRandomInt(0, CONFIG.maxY)
+            x : getRandomInt(0, CONFIG.maxX),
+            y : getRandomInt(0, CONFIG.maxY)
         };
-    },
-    
-    getRandomPositionOnBorder : function () {
-        var x, y;
-        if (UTILS.getRandomInt(0, 1) === 0) {
-            x = CONFIG.maxX * UTILS.getRandomInt(0, 1);
-            y = UTILS.getRandomInt(0, CONFIG.maxY);
-        } else {
-            y = CONFIG.maxY * UTILS.getRandomInt(0, 1);
-            x = UTILS.getRandomInt(0, CONFIG.maxX);
-        }
-        return { x : x, y : y };
     },
     
     checkForSnakesHead : function (position) {
@@ -247,7 +235,7 @@ Game.prototype = {
 function createFirstMovementFrames(count) {
     var firstMovementFrames = new Array(count);
     for (var i = 0; i < firstMovementFrames.length; i++) {
-        firstMovementFrames[i] = UTILS.getRandomInt(0, CONFIG.fireflyDelay);
+        firstMovementFrames[i] = getRandomInt(0, CONFIG.fireflyDelay);
     }
     return firstMovementFrames;
 }

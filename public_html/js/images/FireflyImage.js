@@ -1,10 +1,10 @@
-/* global THREE, CONFIG, UTILS, IMAGE_UTILS */
+/* global THREE, CONFIG */
 
 function FireflyImage (firefly, scene) {
     this.firefly = firefly;
     this.scene = scene;
     
-    this.image = IMAGE_UTILS.createFirefly(UTILS.toSceneX(firefly.x), UTILS.toSceneY(firefly.y));
+    this.image = createFirefly(toSceneX(firefly.x), toSceneY(firefly.y));
     scene.add(this.image);
     
     this.firefly.addMovingHandler(this.movingHandler.bind(this));
@@ -24,6 +24,6 @@ FireflyImage.prototype = {
 };
 
 function replaceImage (image, x, y) {
-    image.position.x = UTILS.toSceneX(x);
-    image.position.y = UTILS.toSceneY(y);
+    image.position.x = toSceneX(x);
+    image.position.y = toSceneY(y);
 }

@@ -1,4 +1,4 @@
-/* global THREE, CONFIG, Detector, UTILS, IMAGE_UTILS */
+/* global THREE, CONFIG, Detector */
 
 function GameScene (game) {
     this.game = game;
@@ -13,16 +13,16 @@ GameScene.prototype = {
         CONFIG.initDelay();
         this.gameContainer = getElement(CONFIG.containerName);
         
-        this.scene = IMAGE_UTILS.createScene();
-        this.camera = IMAGE_UTILS.createCamera();
-        this.renderer = IMAGE_UTILS.createRenderer();
+        this.scene = createScene();
+        this.camera = createCamera();
+        this.renderer = createRenderer();
         
         this.addEvents(this.renderer, this.game);
         
         this.gameContainer.appendChild(this.renderer.domElement);
         
-        this.scene.add(IMAGE_UTILS.createGround());
-        this.scene.add(IMAGE_UTILS.createMainLight()); 
+        this.scene.add(createGround());
+        this.scene.add(createMainLight()); 
         
         this.snakeImage = new SnakeImage(this.game.snake, this.scene);
         
