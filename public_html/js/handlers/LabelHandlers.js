@@ -1,58 +1,29 @@
 /* global CONFIG */
 
-function UpdateScoreHandler(game, label) {
-    this.label = label;
-    this.game = game;
-    this.game.addUpdateScoreHandler(this.handleEvent.bind(this));
+function createUpdateScoreHandler(label) {
+    return function (score) {
+        label.innerHTML = score;
+    };
 }
 
-UpdateScoreHandler.prototype = {
-    constructor : UpdateScoreHandler,
-    
-    handleEvent : function (score) {
-        this.label.innerHTML = score;
-    }
-};
-
-function GameOverHandler(game, label) {
-    this.label = label;
-    game.addGameOverHandler(this.handleEvent.bind(this));
-}
-
-GameOverHandler.prototype = {
-    constructor : GameOverHandler,
-     
-    handleEvent : function (showMessage) {
+function createGameOverHandler(label) {
+    return function(showMessage) {
         if (showMessage) {
-            this.label.innerHTML = CONFIG.loseMessage;
+            label.innerHTML = CONFIG.loseMessage;
         } else {
-            this.label.innerHTML = '';
-        }
-    }
-};
-
-function UpdateLevelHandler(game, label) {
-    this.label = label;
-    game.addUpdateLevelHandler(this.handleEvent.bind(this));
+            label.innerHTML = '';
+        }       
+    };
 }
 
-UpdateLevelHandler.prototype = {
-    constructor : UpdateLevelHandler,
-    
-    handleEvent : function(level) {
-        this.label.innerHTML = level;
-    }
-};
-
-function RemainigStepsHandler(game, label) {
-    this.label = label;
-    game.addRemainingStepsHandler(this.handleEvent.bind(this));
+function createUpdateLevelHandler(label) {
+    return function(level) {
+        label.innerHTML = level;
+    };
 }
 
-RemainigStepsHandler.prototype = {
-    constructor : RemainigStepsHandler,
-    
-    handleEvent : function(remainingSteps) {
-        this.label.innerHTML = remainingSteps;
-    }
-};
+function createTimeHandler(label) {
+    return function (remainingSteps) {
+        label.innerHTML = remainingSteps;
+    };
+}

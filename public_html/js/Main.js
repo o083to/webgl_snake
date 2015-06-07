@@ -31,10 +31,10 @@ GameScene.prototype = {
         }
         this.game.addFireflyCreationHandler(this.drawFirefly.bind(this));
         
-        this.scoreHandler = new UpdateScoreHandler(this.game, document.getElementById(CONFIG.scoreLabelName));
-        this.gameOverHandler = new GameOverHandler(this.game, document.getElementById(CONFIG.gameOverLabelName));
-        this.levelHandler = new UpdateLevelHandler(this.game, document.getElementById(CONFIG.levelLabelName));
-        this.remainingStepsHandler = new RemainigStepsHandler(this.game, document.getElementById(CONFIG.remainingStepsLabelName));
+        this.game.addUpdateScoreHandler(createUpdateScoreHandler(document.getElementById(CONFIG.scoreLabelName)));
+        this.game.addGameOverHandler(createGameOverHandler(document.getElementById(CONFIG.gameOverLabelName)));
+        this.game.addUpdateLevelHandler(createUpdateLevelHandler(document.getElementById(CONFIG.levelLabelName)));
+        this.game.addRemainingStepsHandler(createTimeHandler(document.getElementById(CONFIG.remainingStepsLabelName)));
         
         this.updateRendererSize();
         this.draw();
