@@ -11,7 +11,7 @@ GameScene.prototype = {
     
     init : function () {
         CONFIG.initDelay();
-        this.gameContainer = document.getElementById(CONFIG.containerName);
+        this.gameContainer = getElement(CONFIG.containerName);
         
         this.scene = IMAGE_UTILS.createScene();
         this.camera = IMAGE_UTILS.createCamera();
@@ -31,10 +31,10 @@ GameScene.prototype = {
         }
         this.game.addFireflyCreationHandler(this.drawFirefly.bind(this));
         
-        this.game.addUpdateScoreHandler(createUpdateScoreHandler(document.getElementById(CONFIG.scoreLabelName)));
-        this.game.addGameOverHandler(createGameOverHandler(document.getElementById(CONFIG.gameOverLabelName)));
-        this.game.addUpdateLevelHandler(createUpdateLevelHandler(document.getElementById(CONFIG.levelLabelName)));
-        this.game.addRemainingStepsHandler(createTimeHandler(document.getElementById(CONFIG.remainingStepsLabelName)));
+        this.game.addUpdateScoreHandler(createUpdateScoreHandler(getElement(CONFIG.scoreLabelName)));
+        this.game.addGameOverHandler(createGameOverHandler(getElement(CONFIG.gameOverLabelName)));
+        this.game.addUpdateLevelHandler(createUpdateLevelHandler(getElement(CONFIG.levelLabelName)));
+        this.game.addRemainingStepsHandler(createTimeHandler(getElement(CONFIG.remainingStepsLabelName)));
         
         this.updateRendererSize();
         this.draw();
@@ -70,12 +70,12 @@ GameScene.prototype = {
             window.onresize = this.updateRendererSize;
             document.addEventListener('keydown', new KeyDownHandler(game));
             renderer.domElement.addEventListener('touchstart', new TouchStartHandler(game));
-            document.getElementById(CONFIG.playButtonName).onclick = createPlayButtonHandler(game);
-            document.getElementById(CONFIG.pauseButtonName).onclick = createPauseButtonHandler(game);
-            document.getElementById(CONFIG.stopButtonName).onclick = createStopButtonHandler(game);
-            document.getElementById(CONFIG.replayButtonName).onclick = createReplayButtonHandler(game);
-            document.getElementById(CONFIG.incSpeedButtonName).onclick = function () { CONFIG.decDelay(); };
-            document.getElementById(CONFIG.decSpeedButtonName).onclick = function () { CONFIG.incDelay(); };
+            getElement(CONFIG.playButtonName).onclick = createPlayButtonHandler(game);
+            getElement(CONFIG.pauseButtonName).onclick = createPauseButtonHandler(game);
+            getElement(CONFIG.stopButtonName).onclick = createStopButtonHandler(game);
+            getElement(CONFIG.replayButtonName).onclick = createReplayButtonHandler(game);
+            getElement(CONFIG.incSpeedButtonName).onclick = function () { CONFIG.decDelay(); };
+            getElement(CONFIG.decSpeedButtonName).onclick = function () { CONFIG.incDelay(); };
         });
     }
 };
@@ -88,4 +88,8 @@ function snakeGame () {
         var gameScene = new GameScene(game);
         gameScene.init();
     }
+}
+
+function getElement(id) {
+    return document.getElementById(id);
 }
