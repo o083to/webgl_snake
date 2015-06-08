@@ -13,35 +13,16 @@ GameScene.prototype = {
         CONFIG.initDelay();
         this.gameContainer = getElement(CONFIG.containerName);
         
-        this.scene = createScene();
-        this.camera = createCamera();
-        this.renderer = createRenderer();
+        this.createBackground();
+        this.createPlayers();
         
-        this.addEvents(this.renderer, this.game);
+        this.addEventsToWindow(this.renderer, this.game);   
         
-        this.gameContainer.appendChild(this.renderer.domElement);
-        
-        this.scene.add(createGround());
-        this.scene.add(createMainLight()); 
-        
-        this.snakeImage = new SnakeImage(this.game.snake, this.scene);
-        
-        for (var i = 0; i < this.game.fireflies.length; i++) {
-            this.drawFirefly(this.game.fireflies[i]);
-        }
-        this.game.addFireflyCreationHandler(this.drawFirefly.bind(this));
-        
-        this.game.addUpdateScoreHandler(createUpdateScoreHandler(getElement(CONFIG.scoreLabelName)));
-        this.game.addGameOverHandler(createGameOverHandler(getElement(CONFIG.gameOverLabelName)));
-        this.game.addUpdateLevelHandler(createUpdateLevelHandler(getElement(CONFIG.levelLabelName)));
-        this.game.addRemainingStepsHandler(createTimeHandler(getElement(CONFIG.remainingStepsLabelName)));
+        this.game.addFireflyCreationHandler(createFireflyCreationHandler(this.scene));    
+        this.setHandlers();
         
         this.updateRendererSize();
         this.draw();
-    },
-     
-    drawFirefly : function (firefly) {
-        new FireflyImage(firefly, this.scene);
     },
     
     draw : function () {
@@ -51,6 +32,29 @@ GameScene.prototype = {
         this.game.nextStep(this.frameCounter++);
         requestAnimationFrame(this.draw.bind(this));
         this.renderer.render(this.scene, this.camera);
+    },
+    
+    createBackground : function () {
+        this.scene = createScene();
+        this.camera = createCamera();
+        this.renderer = createRenderer();        
+        this.gameContainer.appendChild(this.renderer.domElement);
+        this.scene.add(createGround());
+        this.scene.add(createMainLight());
+    },
+    
+    createPlayers : function () {
+        this.snakeImage = new SnakeImage(this.game.snake, this.scene);        
+        for (var i = 0; i < this.game.fireflies.length; i++) {
+            new FireflyImage(this.game.fireflies[i], this.scene);
+        }
+    },
+    
+    setHandlers : function () {
+        this.game.addUpdateScoreHandler(createUpdateScoreHandler(getElement(CONFIG.scoreLabelName)));
+        this.game.addGameOverHandler(createGameOverHandler(getElement(CONFIG.gameOverLabelName)));
+        this.game.addUpdateLevelHandler(createUpdateLevelHandler(getElement(CONFIG.levelLabelName)));
+        this.game.addRemainingStepsHandler(createTimeHandler(getElement(CONFIG.remainingStepsLabelName)));
     },
     
     updateRendererSize : function () {
@@ -65,7 +69,7 @@ GameScene.prototype = {
         this.renderer.setSize(width, height);
     },
     
-    addEvents : function (renderer, game) {
+    addEventsToWindow : function (renderer, game) {
         window.addEventListener("load", function(event) {
             window.onresize = this.updateRendererSize;
             document.addEventListener('keydown', new KeyDownHandler(game));
@@ -92,4 +96,10 @@ function snakeGame () {
 
 function getElement(id) {
     return document.getElementById(id);
+}
+
+function createFireflyCreationHandler(scene) {
+    return function (firefly) {
+        new FireflyImage(firefly, scene);
+    };
 }
