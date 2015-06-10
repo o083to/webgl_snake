@@ -1,64 +1,67 @@
-/* global THREE, CONFIG */
+/* global THREE */
 
-SnakeImage = function (snake, scene) {
-    this.snake = snake;
-    this.scene = scene;
+function SnakeImage(snake, scene) {
+    var bodyImage;
     
-    this.initBody();
+    initBody();
     
-    this.snake.addMovingHandler(this.movingHandler.bind(this));
-    this.snake.addGrowthHandler(this.growthHandler.bind(this));
-    this.snake.addRevivalHandler(this.revivalHandler.bind(this));
-    this.snake.addDecreaseHandler(this.decreaseHandler.bind(this));
-};
-
-SnakeImage.prototype = {
-    constructor : SnakeImage,
+    snake.addMovingHandler(createMovingHandler());
+    snake.addGrowthHandler(createGrowthHandler());
+    snake.addRevivalHandler(createRevivalHandler());
+    snake.addDecreaseHandler(createDecreaseHandler());
     
-    movingHandler : function () {
-        var tail = this.bodyImage.pop();
-        var headX = this.snake.body[0].x;
-        var headY = this.snake.body[0].y;
-        replaceSegment(tail, headX, headY);
-        this.bodyImage.unshift(tail);
-    },
-    
-    growthHandler : function () {
-        var tail = this.snake.body[this.snake.body.length - 1];
-        var tailImage = createSnakeSegment(tail.x, tail.y);
-        this.bodyImage.push(tailImage);
-        this.scene.add(tailImage);
-    },
-    
-    revivalHandler : function () {
-        this.removeBodyFromScene();
-        this.initBody();
-    },
-    
-    decreaseHandler : function () {
-        var newLength = this.snake.body.length;
-        for (var i = this.bodyImage.length - 1; i >= newLength; i--) {
-            this.scene.remove(this.bodyImage[i]);
-        }
-        this.bodyImage.splice(newLength, this.bodyImage.length - newLength);
-    },
-    
-    initBody : function () {
-        this.bodyImage = new Array(this.length);
-        for (var i = 0; i < this.snake.body.length; i++) {        
-            this.bodyImage[i] = createSnakeSegment(this.snake.body[i].x, this.snake.body[i].y);
-            this.scene.add(this.bodyImage[i]);
-        }
-    },
-    
-    removeBodyFromScene : function () {
-        for (var i = 0; i < this.bodyImage.length; i++) {
-            this.scene.remove(this.bodyImage[i]);
+    function initBody() {
+        bodyImage = new Array();
+        for (var i = 0; i < snake.body.length; i++) {        
+            bodyImage[i] = createSnakeSegment(snake.body[i].x, snake.body[i].y);
+            scene.add(bodyImage[i]);
         }
     }
+    
+    function removeBodyFromScene () {
+        for (var i = 0; i < bodyImage.length; i++) {
+            scene.remove(bodyImage[i]);
+        }
+    }
+    
+    function createMovingHandler() {
+        return function () {
+            var tail = bodyImage.pop();
+            var headX = snake.body[0].x;
+            var headY = snake.body[0].y;
+            replaceSegment(tail, headX, headY);
+            bodyImage.unshift(tail);
+        };
+    }
+    
+    function createGrowthHandler() {
+        return function () {
+            var tail = snake.body[snake.body.length - 1];
+            var tailImage = createSnakeSegment(tail.x, tail.y);
+            bodyImage.push(tailImage);
+            scene.add(tailImage);
+        };
+    }
+    
+    function createRevivalHandler() {
+        return function () {
+            removeBodyFromScene();
+            initBody();
+        };
+    }
+    
+    function createDecreaseHandler() {
+        return function () {
+            var newLength = snake.body.length;
+            for (var i = bodyImage.length - 1; i >= newLength; i--) {
+                scene.remove(bodyImage[i]);
+            }
+            bodyImage.splice(newLength, bodyImage.length - newLength);
+        };
+    }
+    
+    function replaceSegment(segment, x, y) {
+        segment.position.x = toSceneX(x);
+        segment.position.y = toSceneY(y);
+    }
 };
-
-function replaceSegment(segment, x, y) {
-    segment.position.x = toSceneX(x);
-    segment.position.y = toSceneY(y);
-}

@@ -1,29 +1,26 @@
 /* global THREE, CONFIG */
 
-function FireflyImage (firefly, scene) {
-    this.firefly = firefly;
-    this.scene = scene;
+function FireflyImage (firefly, scene) {    
+    var image = createFirefly(toSceneX(firefly.x), toSceneY(firefly.y));
     
-    this.image = createFirefly(toSceneX(firefly.x), toSceneY(firefly.y));
-    scene.add(this.image);
+    scene.add(image);    
+    firefly.addMovingHandler(createMovingHandler());
+    firefly.addDeathHandler(createDeathHandler());
     
-    this.firefly.addMovingHandler(this.movingHandler.bind(this));
-    this.firefly.addDeathHandler(this.deathHandler.bind(this));
-}
-
-FireflyImage.prototype = {
-    constructor : FireflyImage,
+    function createMovingHandler() {
+        return function () {
+            replaceImage(firefly.x, firefly.y);
+        };
+    }
     
-    movingHandler : function () {
-        replaceImage(this.image, this.firefly.x, this.firefly.y);
-    },
+    function createDeathHandler() {
+        return function () {
+            scene.remove(image);
+        };
+    }
     
-    deathHandler : function () {
-        this.scene.remove(this.image);
+    function replaceImage (x, y) {
+        image.position.x = toSceneX(x);
+        image.position.y = toSceneY(y);
     }
 };
-
-function replaceImage (image, x, y) {
-    image.position.x = toSceneX(x);
-    image.position.y = toSceneY(y);
-}

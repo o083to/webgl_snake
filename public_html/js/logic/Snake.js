@@ -1,20 +1,21 @@
 /* global DIRECTION, CONFIG */
 
-Snake = function (length) {
-    this.direction = DIRECTION.RIGHT;
-    this.initBody(length);
-};
-
-Snake.prototype = {
-    constructor : Snake,
+function Snake(length) {
+    var t = this;
+    var direction = DIRECTION.RIGHT;
+    var oldTailX = 0;
+    var oldTailY = 0;
+    var movingHandler;
+    var growthHandler;
+    var revivalHandler;
+    var decreaseHandler;
     
-    oldTailX : 0,    
-    oldTailY : 0,
+    initBody();
     
-    move : function () {
-        var headX = this.body[0].x;
-        var headY = this.body[0].y;        
-        switch (this.direction) {
+    this.move = function () {
+        var headX = t.body[0].x;
+        var headY = t.body[0].y;        
+        switch (direction) {
             case DIRECTION.DOWN:
                 headY = headY === 0 ? CONFIG.maxY : headY - 1;
                 break;
@@ -27,71 +28,71 @@ Snake.prototype = {
             case DIRECTION.RIGHT:
                 headX = headX === CONFIG.maxX ? 0 : headX + 1;
         }
-        var tail = this.body.pop();
-        this.oldTailX = tail.x;
-        this.oldTailY = tail.y;
-        if (arrayIncludesXY(this.body, headX, headY)) {
+        var tail = t.body.pop();
+        oldTailX = tail.x;
+        oldTailY = tail.y;
+        if (arrayIncludesXY(t.body, headX, headY)) {
             return false;
         } else {
             tail.x = headX;
             tail.y = headY;
-            this.body.unshift(tail);
-            this.movingHandler();
+            t.body.unshift(tail);
+            movingHandler();
             return true;
         }
-    },
+    };
     
-    addMovingHandler : function (handler) {
-        this.movingHandler = handler;
-    },
+    this.addMovingHandler = function (handler) {
+        movingHandler = handler;
+    };
     
-    turn : function (newDirection) {
-        if ((this.direction % 2) !== (newDirection % 2)) {
-            this.direction = newDirection;
+    this.turn = function (newDirection) {
+        if ((direction % 2) !== (newDirection % 2)) {
+            direction = newDirection;
         }
-    },
+    };
     
-    grow : function () {
-        this.body.push({x : this.oldTailX, y : this.oldTailY});
-        this.growthHandler();
-    },
+    this.grow = function () {
+        t.body.push({x : oldTailX, y : oldTailY});
+        growthHandler();
+    };
     
-    addGrowthHandler : function (handler) {
-        this.growthHandler = handler;
-    },
+    this.addGrowthHandler = function (handler) {
+        growthHandler = handler;
+    };
     
-    revive : function () {
-        this.direction = DIRECTION.RIGHT;
-        this.initBody(CONFIG.initialSnakeLength);
-        this.revivalHandler();
-    },
+    this.revive = function () {
+        direction = DIRECTION.RIGHT;
+        initBody(CONFIG.initialSnakeLength);
+        revivalHandler();
+    };
     
-    addRevivalHandler : function (handler) {
-        this.revivalHandler = handler;
-    },
+    this.addRevivalHandler = function (handler) {
+        revivalHandler = handler;
+    };
     
-    decrease : function (count) {
+    this.decrease = function (count) {
         var isAlive = true;
-        var newLength = this.body.length - count;
-        this.oldTailX = this.body[newLength].x;
-        this.oldTailY = this.body[newLength].y;
+        var newLength = t.body.length - count;
+        oldTailX = t.body[newLength].x;
+        oldTailY = t.body[newLength].y;
         if (newLength < CONFIG.minSnakeLength) {
             newLength = 2;
             isAlive = false;
         } 
-        this.body.splice(newLength, count);
-        this.decreaseHandler();
+        t.body.splice(newLength, count);
+        decreaseHandler();
         return isAlive;
-    },
+    };
     
-    addDecreaseHandler : function (handler) {
-        this.decreaseHandler = handler;
-    },
+    this.addDecreaseHandler = function (handler) {
+        decreaseHandler = handler;
+    };
     
-    initBody : function (length) {
-        this.body = new Array(length);
+    function initBody () {
+        t.body = new Array(length);
         for (var i = 0; i < length; i++) {
-            this.body[i] = {
+            t.body[i] = {
                 x : CONFIG.initHeadX - i,
                 y : CONFIG.initHeadY
             };
