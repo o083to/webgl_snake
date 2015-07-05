@@ -72,8 +72,8 @@ GameScene.prototype = {
     addEventsToWindow : function (renderer, game) {
         window.addEventListener("load", function(event) {
             window.onresize = this.updateRendererSize;
-            document.addEventListener('keydown', new KeyDownHandler(game));
-            renderer.domElement.addEventListener('touchstart', new TouchStartHandler(game));
+            document.addEventListener('keydown', createKeyDownHandler(game));
+            renderer.domElement.addEventListener('touchstart', createTouchStartHandler(game));
             getElement(CONFIG.playButtonName).onclick = createPlayButtonHandler(game);
             getElement(CONFIG.pauseButtonName).onclick = createPauseButtonHandler(game);
             getElement(CONFIG.stopButtonName).onclick = createStopButtonHandler(game);

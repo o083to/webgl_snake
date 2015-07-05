@@ -11,30 +11,24 @@ var KEY_CODES = {
     DOWN2 : 83
 };
 
-function KeyDownHandler(game) {
-    this.game = game;
-}
-
-KeyDownHandler.prototype = {
-    constructor : KeyDownHandler,
-    
-    handleEvent : function (event) {
+function createKeyDownHandler(game) {
+    return function(event) {
         switch (event.keyCode) {
             case KEY_CODES.DOWN1:
             case KEY_CODES.DOWN2:
-                this.game.turnSnake(DIRECTION.DOWN);
+                game.turnSnake(DIRECTION.DOWN);
                 break;
             case KEY_CODES.LEFT1:
             case KEY_CODES.LEFT2:
-                this.game.turnSnake(DIRECTION.LEFT);
+                game.turnSnake(DIRECTION.LEFT);
                 break;
             case KEY_CODES.UP1:
             case KEY_CODES.UP2:
-                this.game.turnSnake(DIRECTION.UP);
+                game.turnSnake(DIRECTION.UP);
                 break;
             case KEY_CODES.RIGHT1:
             case KEY_CODES.RIGHT2:
-                this.game.turnSnake(DIRECTION.RIGHT);
+                game.turnSnake(DIRECTION.RIGHT);
         }
-    }
-};
+    };
+}
