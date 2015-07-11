@@ -127,7 +127,7 @@ Game.prototype = {
     
     checkForCollision : function () {
         for (var i = 0; i < this.fireflies.length; i++) {
-            if (positionsEquals(this.snake.body[0], this.fireflies[i])) {
+            if (positionsEquals(this.snake.getBody()[0], this.fireflies[i])) {
                 this.killFirefly(i);
                 this.snake.grow();
                 this.updateScore();
@@ -177,7 +177,7 @@ Game.prototype = {
     },
     
     isFreePosition : function (position) {
-        return (!arrayIncludesXY(this.snake.body, position.x, position.y) 
+        return (!arrayIncludesXY(this.snake.getBody(), position.x, position.y) 
                 && !arrayIncludesXY(this.fireflies, position.x, position.y)
                 && this.checkForSnakesHead(position));
     },
@@ -218,7 +218,7 @@ Game.prototype = {
     },
     
     checkForSnakesHead : function (position) {
-        var headPosition = this.snake.body[0];
+        var headPosition = this.snake.getBody()[0];
         for (var dx = -1; dx <= 1; dx++) {
             for (var dy = -1; dy <= 1; dy++) {
                 if (!(dx === 0 && dy === 0)) {

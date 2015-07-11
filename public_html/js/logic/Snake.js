@@ -1,7 +1,7 @@
 /* global DIRECTION, CONFIG */
 
 function Snake(length) {
-    var t = this;
+    var body;
     var direction = DIRECTION.RIGHT;
     var oldTailX = 0;
     var oldTailY = 0;
@@ -12,9 +12,13 @@ function Snake(length) {
     
     initBody();
     
+    this.getBody = function () {
+        return body;
+    };
+    
     this.move = function () {
-        var headX = t.body[0].x;
-        var headY = t.body[0].y;        
+        var headX = body[0].x;
+        var headY = body[0].y;        
         switch (direction) {
             case DIRECTION.DOWN:
                 headY = headY === 0 ? CONFIG.maxY : headY - 1;
@@ -28,15 +32,15 @@ function Snake(length) {
             case DIRECTION.RIGHT:
                 headX = headX === CONFIG.maxX ? 0 : headX + 1;
         }
-        var tail = t.body.pop();
+        var tail = body.pop();
         oldTailX = tail.x;
         oldTailY = tail.y;
-        if (arrayIncludesXY(t.body, headX, headY)) {
+        if (arrayIncludesXY(body, headX, headY)) {
             return false;
         } else {
             tail.x = headX;
             tail.y = headY;
-            t.body.unshift(tail);
+            body.unshift(tail);
             movingHandler();
             return true;
         }
@@ -53,7 +57,7 @@ function Snake(length) {
     };
     
     this.grow = function () {
-        t.body.push({x : oldTailX, y : oldTailY});
+        body.push({x : oldTailX, y : oldTailY});
         growthHandler();
     };
     
@@ -73,14 +77,14 @@ function Snake(length) {
     
     this.decrease = function (count) {
         var isAlive = true;
-        var newLength = t.body.length - count;
-        oldTailX = t.body[newLength].x;
-        oldTailY = t.body[newLength].y;
+        var newLength = body.length - count;
+        oldTailX = body[newLength].x;
+        oldTailY = body[newLength].y;
         if (newLength < CONFIG.minSnakeLength) {
             newLength = 2;
             isAlive = false;
         } 
-        t.body.splice(newLength, count);
+        body.splice(newLength, count);
         decreaseHandler();
         return isAlive;
     };
@@ -90,9 +94,9 @@ function Snake(length) {
     };
     
     function initBody () {
-        t.body = new Array(length);
+        body = new Array(length);
         for (var i = 0; i < length; i++) {
-            t.body[i] = {
+            body[i] = {
                 x : CONFIG.initHeadX - i,
                 y : CONFIG.initHeadY
             };

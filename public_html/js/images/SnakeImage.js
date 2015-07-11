@@ -12,8 +12,8 @@ function SnakeImage(snake, scene) {
     
     function initBody() {
         bodyImage = new Array();
-        for (var i = 0; i < snake.body.length; i++) {        
-            bodyImage[i] = createSnakeSegment(snake.body[i].x, snake.body[i].y);
+        for (var i = 0; i < snake.getBody().length; i++) {        
+            bodyImage[i] = createSnakeSegment(snake.getBody()[i].x, snake.getBody()[i].y);
             scene.add(bodyImage[i]);
         }
     }
@@ -27,8 +27,8 @@ function SnakeImage(snake, scene) {
     function createMovingHandler() {
         return function () {
             var tail = bodyImage.pop();
-            var headX = snake.body[0].x;
-            var headY = snake.body[0].y;
+            var headX = snake.getBody()[0].x;
+            var headY = snake.getBody()[0].y;
             replaceSegment(tail, headX, headY);
             bodyImage.unshift(tail);
         };
@@ -36,7 +36,7 @@ function SnakeImage(snake, scene) {
     
     function createGrowthHandler() {
         return function () {
-            var tail = snake.body[snake.body.length - 1];
+            var tail = snake.getBody()[snake.getBody().length - 1];
             var tailImage = createSnakeSegment(tail.x, tail.y);
             bodyImage.push(tailImage);
             scene.add(tailImage);
@@ -52,7 +52,7 @@ function SnakeImage(snake, scene) {
     
     function createDecreaseHandler() {
         return function () {
-            var newLength = snake.body.length;
+            var newLength = snake.getBody().length;
             for (var i = bodyImage.length - 1; i >= newLength; i--) {
                 scene.remove(bodyImage[i]);
             }
